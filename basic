@@ -1,0 +1,139 @@
+class Hospital
+{
+  String name ;
+  String address;
+  String phone;
+}
+
+class Doctor extends Hospital
+{
+  String docId;
+  String Name;
+  String dept;
+  String specialize;
+  String phoneNo;
+  String location;
+
+  public void checksPatients ()
+  {
+    System.out.println ("checking Patient");
+  }
+  public void prescribeMeds ()
+  {
+    System.out.println ("prescribe Meds here ....");
+  }
+  
+  public void messagetopatient()
+  {
+  System.out.println("send message to patient");
+}
+  
+  public void patienthistory()
+  {
+	  
+	  System.out.println("Previous history");
+  }
+}
+
+class Dept extends Doctor
+{
+  int id;
+  
+  int docId;
+}
+
+class Patient extends Doctor
+{
+  int patientId;
+  String patientName;
+
+
+  int age;
+  String sex;
+  int roomNo;
+
+  public void takeMeds ()
+  {
+    System.out.println ("Taking meds ##");
+  }
+  public void payBills ()
+  {
+    System.out.println ("!!paying Bills");
+  }
+}
+
+class Perscriptions extends Doctor
+{
+  String doctorName;
+  String patientName;
+}
+
+
+class Nurse extends Patient
+{
+  int nurseId;
+  
+
+  void generateBill ()
+  {
+    System.out.println ("Generating bills..");
+  }
+  void generatePatientDetail ()
+  {
+    System.out.println ("generate Patient details ::");
+  }
+  void takeCareOfPatients ()
+  {
+    System.out.println ("take care of Patients");
+  }
+}
+
+class Rooms extends Patient
+{
+  int roomNo;
+  
+}
+
+class Bill extends Nurse
+{
+  String billNo;
+  
+  float amount;
+
+}`
+
+class Drugs extends Perscriptions
+{
+
+}
+
+
+public class Main extends Hospital
+{
+  public static void main (String[]args)
+  {
+    Hospital h = new Hospital ();
+
+    Doctor d = new Doctor ();
+      
+      d.checksPatients ();
+      d.prescribeMeds ();
+
+    Dept dpt = new Dept ();
+      System.out.println (dpt.name);
+
+    Patient p = new Patient ();
+      p.takeMeds ();
+      p.payBills ();
+
+    Nurse n = new Nurse ();
+      n.generateBill ();
+      n.generatePatientDetail ();
+      n.takeCareOfPatients ();
+
+      n.payBills ();
+
+
+
+  }
+}
