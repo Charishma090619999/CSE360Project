@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.CreateAccountController">
+   <children>
+      <HBox fx:id="NamePane" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <Label text="First Name" />
+                  <Label text="Last Name" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="66.0" prefWidth="294.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="FirstNameField" promptText="Enter your first name" />
+                  <TextField fx:id="LastNameField" promptText="Enter your last name" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="DOBPane" alignment="CENTER_LEFT" prefHeight="59.0" prefWidth="570.0" spacing="10.0">
+         <children>
+            <Label text="Date of Birth">
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <DatePicker fx:id="DOBPicker" editable="false" prefHeight="25.0" prefWidth="214.0" promptText="Enter your date of birth" />
+         </children>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+         <VBox.margin>
+            <Insets left="30.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox fx:id="InfoPane" alignment="CENTER_LEFT" prefHeight="171.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="CENTER_RIGHT" prefHeight="131.0" prefWidth="112.0" spacing="20.0">
+               <children>
+                  <Label text="Pharmacy" />
+                  <Label text="Your Address" />
+                  <Label text="Phone Num." />
+                  <Label text="Insurance" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="149.0" prefWidth="294.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="PharmacyField" promptText="Enter your pharmacy location" />
+                  <TextField fx:id="AddressField" promptText="Enter your home address" />
+                  <TextField fx:id="PhoneNumField" promptText="Enter your phone number" />
+                  <TextField fx:id="InsuranceField" promptText="Enter your insurance provider" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <HBox fx:id="NamePane1" alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <Label text="Username" />
+                  <Label text="Password" />
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="66.0" prefWidth="294.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="UsernameField" promptText="Enter your username" />
+                  <PasswordField fx:id="PasswordField" promptText="Enter a password" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+      </HBox>
+      <HBox fx:id="ButtonPane" alignment="CENTER_RIGHT" prefHeight="69.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="CreateAccountButton" mnemonicParsing="false" onAction="#onCreateAccountButtonClick" text="Create Account" />
+         </children>
+         <padding>
+            <Insets left="30.0" right="30.0" />
+         </padding>
+      </HBox>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" top="10.0" />
+   </padding>
+</VBox>
