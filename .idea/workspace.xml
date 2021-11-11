@@ -2,11 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/MainApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/Login.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortal.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/SignUp.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/SignUpForm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/connection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/DimensionInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/GridConstraints.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/GridLayoutManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/HorizontalInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/LayoutState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/Spacer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/Util.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +54,9 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/com/company/LoginScreen.fxml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/com/company/MainApp.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CSE360Project.iml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/com/company/LoginScreen.fxml" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="20etcUKp52Etpjx4YkIlM1F4ZMa" />
   <component name="ProjectLevelVcsManager">
@@ -49,7 +70,8 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../../Program Files/Java/javafx-sdk-17.0.1/lib" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -78,8 +100,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636416964055</updated>
+      <workItem from="1636522328572" duration="9308000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -91,6 +117,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
