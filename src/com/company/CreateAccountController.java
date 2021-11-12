@@ -13,18 +13,36 @@ import java.io.IOException;
 public class CreateAccountController {
     @FXML
     private Parent CreateAccountPane;
+    private int userID = 0;
+    private FXMLLoader loader;
+
+    public CreateAccountController (int userID, FXMLLoader loader) {
+        //If you were logged in before, now you aren't.
+        this.userID = 0;
+        this.loader = loader;
+    }
 
     @FXML
     public void initialize() {
         System.gc();
         System.out.println("Create Account Pane loaded and initialization begun!");
+        System.out.println("\tLoader: " + loader);
+        System.out.println("\tuserID: " + userID);
+    }
+
+    public Parent getParent() {
+        return CreateAccountPane;
     }
 
     @FXML
     protected void onCreateAccountButtonClick(ActionEvent event) throws IOException {
         //@TO-DO: Check each field to see if it is complete, then send the info to the database
         //Also need to pass through the new database ID to the portal screen.
-        Parent patientPortal = FXMLLoader.load(getClass().getResource("PatientPortal.fxml"));
+        userID = 1000; // temporary value used to demonstrate data passthrough
+        loader.setController(new PatientPortalController(userID, loader));
+        loader.setLocation(getClass().getResource("PatientPortal.fxml"));
+        loader.setRoot(null);
+        Parent patientPortal = loader.load();
         Scene patientPortalScene = new Scene(patientPortal);
 
         //Get the stage
