@@ -16,7 +16,7 @@ public class CreateAccountController {
     private int userID = 0;
     private FXMLLoader loader;
 
-    public CreateAccountController (int userID, FXMLLoader loader) {
+    public CreateAccountController(int userID, FXMLLoader loader) {
         //If you were logged in before, now you aren't.
         this.userID = 0;
         this.loader = loader;
@@ -46,8 +46,22 @@ public class CreateAccountController {
         Scene patientPortalScene = new Scene(patientPortal);
 
         //Get the stage
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(patientPortalScene);
+        window.show();
+    }
+
+    @FXML
+    protected void onBackClick(ActionEvent event) throws IOException {
+        loader.setController(new LoginController(0, loader));
+        loader.setLocation(getClass().getResource("LoginScreen.fxml"));
+        loader.setRoot(null);
+        Parent loginScreen = loader.load();
+        Scene loginScreenScene = new Scene(loginScreen);
+
+        //Get the stage
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(loginScreenScene);
         window.show();
     }
 }

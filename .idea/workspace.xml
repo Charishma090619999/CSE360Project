@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/company/DoctorPortal.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/DoctorPortalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortalController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortalController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortalController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccount.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortal.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MainApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" afterDir="false" />
     </list>
@@ -85,7 +86,9 @@
       <option name="presentableId" value="Default" />
       <updated>1636416964055</updated>
       <workItem from="1636522328572" duration="11127000" />
-      <workItem from="1636693532300" duration="10403000" />
+      <workItem from="1636693532300" duration="11338000" />
+      <workItem from="1636713444457" duration="70000" />
+      <workItem from="1636778873937" duration="11916000" />
     </task>
     <servers />
   </component>
