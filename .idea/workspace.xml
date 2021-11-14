@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/mysql-connector-java-8.0.27.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DoctorPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DoctorPortal.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortal.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +30,10 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/com/company/LoginScreen.fxml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/com/company/MainApp.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CSE360Project.iml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/com/company/LoginScreen.fxml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/com/company/MainApp.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="20etcUKp52Etpjx4YkIlM1F4ZMa" />
   <component name="ProjectLevelVcsManager">
@@ -49,7 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CSE360Project.iml" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -82,7 +81,7 @@
       <workItem from="1636693532300" duration="11338000" />
       <workItem from="1636713444457" duration="70000" />
       <workItem from="1636778873937" duration="12522000" />
-      <workItem from="1636852427110" duration="6387000" />
+      <workItem from="1636852427110" duration="7522000" />
     </task>
     <servers />
   </component>
