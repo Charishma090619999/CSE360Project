@@ -204,8 +204,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="OldUsernameField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
-                              <Label fx:id="OldUsernameStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <TextField fx:id="OldUsernameField" onKeyTyped="#onOldUsernameFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
+                              <Label fx:id="OldUsernameStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="551.0" spacing="10.0">
@@ -218,8 +218,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <PasswordField fx:id="OldPasswordField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
-                              <Label fx:id="OldPasswordStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <PasswordField fx:id="OldPasswordField" onKeyTyped="#onOldPasswordFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
+                              <Label fx:id="OldPasswordStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="551.0" spacing="10.0">
@@ -232,8 +232,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="NewUsernameField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
-                              <Label fx:id="NewUsernameStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <TextField fx:id="NewUsernameField" onKeyTyped="#onNewUsernameFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
+                              <Label fx:id="NewUsernameStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="551.0" spacing="10.0">
@@ -246,8 +246,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <PasswordField fx:id="NewPasswordField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
-                              <Label fx:id="NewPasswordStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <PasswordField fx:id="NewPasswordField" onKeyTyped="#onNewPasswordFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
+                              <Label fx:id="NewPasswordStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" />
@@ -271,28 +271,29 @@
                            <children>
                               <GridPane hgap="10.0" prefHeight="292.0" prefWidth="380.0">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.7999755859375" minWidth="10.0" prefWidth="96.39995117187499" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="10.0" prefWidth="200.800048828125" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label text="Current Doctor:" />
                                     <Label text="Selected Doctor:" GridPane.rowIndex="1" />
-                                    <Label fx:id="SelectedDoctorLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label fx:id="CurrentDoctorLabel" GridPane.columnIndex="1" />
+                                    <Label fx:id="SelectedDoctorLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="ChangeDoctorStatusLabel" alignment="BOTTOM_CENTER" prefHeight="43.0" prefWidth="196.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
-                              <ListView prefHeight="284.0" prefWidth="344.0" />
+                              <ListView fx:id="ChangeDoctorList" prefHeight="284.0" prefWidth="344.0" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="551.0" spacing="100.0">
                            <children>
                               <PasswordField fx:id="verifyDoctorChangeField" prefHeight="25.0" prefWidth="350.0" promptText="Enter your password to verify changes" />
-                              <Button mnemonicParsing="false" text="Change Doctor" />
+                              <Button fx:id="ChangeDoctorButton" mnemonicParsing="false" onAction="#onChangeDoctorClick" text="Change Doctor" />
                            </children>
                         </HBox>
                      </children>

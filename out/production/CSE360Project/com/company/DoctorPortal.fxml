@@ -178,8 +178,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="OldUsernameField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
-                              <Label fx:id="OldUsernameStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <TextField fx:id="OldUsernameField" onKeyTyped="#onOldUsernameFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
+                              <Label fx:id="OldUsernameStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="551.0" spacing="10.0">
@@ -192,8 +192,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <PasswordField fx:id="OldPasswordField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
-                              <Label fx:id="OldPasswordStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <PasswordField fx:id="OldPasswordField" onKeyTyped="#onOldPasswordFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
+                              <Label fx:id="OldPasswordStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="551.0" spacing="10.0">
@@ -206,8 +206,8 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="NewUsernameField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
-                              <Label fx:id="NewUsernameStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <TextField fx:id="NewUsernameField" onKeyTyped="#onNewUsernameFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old username" />
+                              <Label fx:id="NewUsernameStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="551.0" spacing="10.0">
@@ -220,12 +220,15 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <PasswordField fx:id="NewPasswordField" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
-                              <Label fx:id="NewPasswordStatusLabel" prefHeight="17.0" prefWidth="145.0" />
+                              <PasswordField fx:id="NewPasswordField" onKeyTyped="#onNewPasswordFieldType" prefHeight="25.0" prefWidth="245.0" promptText="Enter your old password" />
+                              <Label fx:id="NewPasswordStatusLabel" prefHeight="35.0" prefWidth="170.0" wrapText="true" />
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
                         </HBox>
                         <Button fx:id="UpdateAccountButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onUpdateAccountClick" prefHeight="25.0" prefWidth="118.0" text="Update Account" />
-                        <Label fx:id="UpdateAccountLabel" alignment="BOTTOM_CENTER" prefHeight="38.0" prefWidth="306.0" />
+                        <Label fx:id="UpdateAccountStatusLabel" alignment="BOTTOM_CENTER" prefHeight="38.0" prefWidth="306.0" />
                      </children>
                   </VBox>
                </children>
