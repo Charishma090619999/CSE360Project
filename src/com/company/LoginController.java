@@ -78,6 +78,17 @@ public class LoginController {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(createAccountScene);
             window.show();
+        } else if (employeeUsername.getText().equals("nurse")) {
+            loader.setController(new NursePortalController(userID, loader, con));
+            loader.setLocation(getClass().getResource("NursePortal.fxml"));
+            loader.setRoot(null);
+            Parent createAccount = loader.load();
+            Scene createAccountScene = new Scene(createAccount);
+
+            //Get the stage
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(createAccountScene);
+            window.show();
         }
     }
 

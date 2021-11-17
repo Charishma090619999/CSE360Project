@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/connection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/NursePortalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CSE360Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CSE360Project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccount.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/DoctorPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/DoctorPortal.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/DoctorPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DoctorPortalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +97,7 @@
       <workItem from="1636962135662" duration="2590000" />
       <workItem from="1637008842285" duration="1896000" />
       <workItem from="1637018427851" duration="1766000" />
-      <workItem from="1637123710580" duration="9790000" />
+      <workItem from="1637123710580" duration="10107000" />
     </task>
     <servers />
   </component>
