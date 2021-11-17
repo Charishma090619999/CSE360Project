@@ -56,7 +56,7 @@ public class NursePortalController {
     @FXML
     public void initialize() {
         System.gc();
-        System.out.println("Doctor Pane loaded and initialization begun!");
+        System.out.println("Nurse Pane loaded and initialization begun!");
         System.out.println("\tLoader: " + loader);
         System.out.println("\tuserID: " + userID);
     }
