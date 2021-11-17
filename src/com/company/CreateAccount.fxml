@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="CreateAccountPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="389.0" spacing="10.0" HBox.hgrow="ALWAYS">
@@ -116,7 +115,7 @@
                </padding>
                <children>
                   <Label prefHeight="20.0" prefWidth="90.0" text="Username" />
-                  <TextField fx:id="UsernameField" promptText="Enter your username" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="usernameField" promptText="Enter your username" HBox.hgrow="ALWAYS" />
                   <Label fx:id="UsernameStatusLabel" prefHeight="50.0" prefWidth="90.0" wrapText="true" />
                </children>
                <VBox.margin>
@@ -129,14 +128,14 @@
                </padding>
                <children>
                   <Label prefHeight="20.0" prefWidth="90.0" text="Password" />
-                  <PasswordField fx:id="PasswordField" promptText="Enter a password" HBox.hgrow="ALWAYS" />
+                  <PasswordField fx:id="passwordField" promptText="Enter a password" HBox.hgrow="ALWAYS" />
                   <Label fx:id="PasswordStatusLabel" prefHeight="50.0" prefWidth="90.0" wrapText="true" />
                </children>
                <VBox.margin>
                   <Insets right="20.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="CreateAccountStatusLabel" prefHeight="20.0" prefWidth="200.0" />
+            <Label fx:id="CreateAccountStatusLabel" prefHeight="49.0" prefWidth="361.0" wrapText="true" />
          </children>
          <opaqueInsets>
             <Insets />

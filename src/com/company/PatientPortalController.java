@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class PatientPortalController {
+
+    private connection con;
+
     @FXML
     private Parent PatientPortalPane;
     private int userID;
@@ -109,9 +112,10 @@ public class PatientPortalController {
     @FXML
     private TextArea SentMessageField;
 
-    public PatientPortalController(int userID, FXMLLoader loader) {
+    public PatientPortalController(int userID, FXMLLoader loader, connection con) {
         this.userID = userID;
         this.loader = loader;
+        this.con = con;
         //Set username and password from database.
     }
 
@@ -322,9 +326,7 @@ public class PatientPortalController {
 
     @FXML
     protected void onLogoutButtonClick(ActionEvent event) throws IOException {
-        //@TO-DO: Add logic for ending the database connection. There is currently no database code
-        //at all, but when that is added the connection needs to be stopped here.
-        loader.setController(new LoginController(0, loader));
+        loader.setController(new LoginController(0, loader, con));
         loader.setLocation(getClass().getResource("LoginScreen.fxml"));
         loader.setRoot(null);
         Parent loginScreen = loader.load();
