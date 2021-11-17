@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="" />
+    <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CSE360Project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CSE360Project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccount.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/DoctorPortal.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/DoctorPortal.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/LoginScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/MainApp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccount.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/DoctorPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/DoctorPortalController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/LoginScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +45,10 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/com/company/DoctorPortalController.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CSE360Project.iml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/com/company/LoginController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/com/company/connection.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/com/company/LoginScreen.fxml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/com/company/MainApp.java" root0="FORCE_HIGHLIGHTING" />
@@ -42,17 +63,24 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CSE360Project.iml" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/mysql-connector-java-8.0.27.jar" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tacos\OneDrive - Arizona State University\Fall 2021\CSE360\project\Phase 3\CSE360Project\src\com\company" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tacos\OneDrive - Arizona State University\Fall 2021\CSE360\project\Phase 3\CSE360Project\lib" />
+      <recent name="C:\Users\tacos\OneDrive - Arizona State University\Fall 2021\CSE360\project\Phase 3\CSE360Project\src" />
     </key>
   </component>
   <component name="RunManager">
@@ -80,7 +108,9 @@
       <workItem from="1636778873937" duration="12522000" />
       <workItem from="1636852427110" duration="7522000" />
       <workItem from="1636962135662" duration="2590000" />
-      <workItem from="1637008842285" duration="1297000" />
+      <workItem from="1637008842285" duration="1896000" />
+      <workItem from="1637018427851" duration="1766000" />
+      <workItem from="1637123710580" duration="9790000" />
     </task>
     <servers />
   </component>

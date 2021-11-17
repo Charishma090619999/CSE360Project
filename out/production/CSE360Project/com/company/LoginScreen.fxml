@@ -16,6 +16,7 @@
             <TextField fx:id="employeeUsername" promptText="Username" />
             <PasswordField fx:id="employeePassword" promptText="Password" />
             <Button fx:id="employeeLogin" mnemonicParsing="false" onAction="#onEmployeeLoginClick" text="Login" />
+            <Label fx:id="EmployeeLoginStatusLabel" alignment="CENTER" prefHeight="40.0" prefWidth="180.0" wrapText="true" />
          </children>
       </VBox>
       <VBox fx:id="PatientPane" alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" spacing="15.0">
@@ -32,6 +33,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
+            <Label fx:id="PatientLoginStatusLabel" alignment="CENTER" prefHeight="40.0" prefWidth="180.0" wrapText="true" />
          </children>
       </VBox>
    </children>

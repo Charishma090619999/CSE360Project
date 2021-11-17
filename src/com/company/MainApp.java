@@ -7,17 +7,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
         //Application starts at the login screen. Each page handles moving to other pages.
-        //This is also where we should start the database connection.
+
+        //This connection gets passed around the program so we can access the database in any screen.
+        connection con = new connection("root", "root", "cse360project");
+
         FXMLLoader loader = new FXMLLoader();
         //When loading, set the location to the file you want and the controller to that screen's controller.
         loader.setLocation(getClass().getResource("LoginScreen.fxml"));
-        loader.setController(new LoginController(0, loader));
+        loader.setController(new LoginController(0, loader, con));
 
         Parent loginPane = loader.load();
         Scene scene = new Scene(loginPane, 600, 400);
