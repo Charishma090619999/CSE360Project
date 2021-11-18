@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -35,9 +36,11 @@ public class CreateAccountController {
     @FXML
     private DatePicker DOBPicker;
     @FXML
+    private TextField PharmacyField;
+    @FXML
     private TextField AddressField;
     @FXML
-    private TextField PhoneField;
+    private TextField PhoneNumField;
     @FXML
     private TextField InsuranceField;
     @FXML
@@ -75,6 +78,7 @@ public class CreateAccountController {
             CreateAccountStatusLabel.setTextFill(Color.RED);
             CreateAccountStatusLabel.setText("Unable to connect to database.\n" +
                     "You will be unable to pick a doctor at this time.");
+            e.printStackTrace();
         }
 
     }
@@ -92,10 +96,13 @@ public class CreateAccountController {
         } else if (DOBPicker.getValue() == null) {
             CreateAccountStatusLabel.setTextFill(Color.RED);
             CreateAccountStatusLabel.setText("You must provide your date of birth");
+        } else if (PharmacyField.getText().equals("")) {
+            CreateAccountStatusLabel.setTextFill(Color.RED);
+            CreateAccountStatusLabel.setText("Pharmacy is required");
         } else if (AddressField.getText().equals("")) {
             CreateAccountStatusLabel.setTextFill(Color.RED);
             CreateAccountStatusLabel.setText("Address is required");
-        } else if (PhoneField.getText().equals("")) {
+        } else if (PhoneNumField.getText().equals("")) {
             CreateAccountStatusLabel.setTextFill(Color.RED);
             CreateAccountStatusLabel.setText("Phone number is required");
         } else if (InsuranceField.getText().equals("")) {
@@ -104,21 +111,25 @@ public class CreateAccountController {
         } else if (passwordField.getText().length() < 8) {
             CreateAccountStatusLabel.setTextFill(Color.RED);
             CreateAccountStatusLabel.setText("Password must be 8 or more characters long");
-        //We need to check the database for if the username is unique or not.
+        //We need to check the database for if the username is unique or not. Temp check added
         } else {
+            if (usernameField.getText().equals("root")) {
+                CreateAccountStatusLabel.setTextFill(Color.RED);
+                CreateAccountStatusLabel.setText("Username must be unique");
+            } else {
+                loader.setController(new PatientPortalController(userID, loader, con));
+                loader.setLocation(getClass().getResource("PatientPortal.fxml"));
+                loader.setRoot(null);
+                Parent patientPortal = loader.load();
+                Scene patientPortalScene = new Scene(patientPortal);
 
+                //Get the stage
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(patientPortalScene);
+                window.show();
+            }
         }
 
-        loader.setController(new PatientPortalController(userID, loader, con));
-        loader.setLocation(getClass().getResource("PatientPortal.fxml"));
-        loader.setRoot(null);
-        Parent patientPortal = loader.load();
-        Scene patientPortalScene = new Scene(patientPortal);
-
-        //Get the stage
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(patientPortalScene);
-        window.show();
     }
 
     @FXML
