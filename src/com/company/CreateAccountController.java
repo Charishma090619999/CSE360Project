@@ -67,7 +67,7 @@ public class CreateAccountController {
             Connection connection = con.getdbconnection();
             Statement s = connection.createStatement();
             //Gets all doctors. Currently is unusued.
-            ResultSet r = s.executeQuery("SELECT UserID, FirstName, LastName FROM employee WHERE EmployeeType=0");
+            ResultSet r = s.executeQuery("SELECT UserID, FirstName, LastName FROM employee WHERE employeeType=0");
             while (r.next()) {
                 Doctor newDoc = new Doctor(r.getString(2), r.getString(3), r.getInt(1));
                 DoctorSelectList.getItems().add(newDoc);
