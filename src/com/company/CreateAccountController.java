@@ -111,23 +111,61 @@ public class CreateAccountController {
         } else if (passwordField.getText().length() < 8) {
             CreateAccountStatusLabel.setTextFill(Color.RED);
             CreateAccountStatusLabel.setText("Password must be 8 or more characters long");
-        //We need to check the database for if the username is unique or not. Temp check added
+            //We need to check the database for if the username is unique or not. Temp check added
         } else {
-            if (usernameField.getText().equals("root")) {
-                CreateAccountStatusLabel.setTextFill(Color.RED);
-                CreateAccountStatusLabel.setText("Username must be unique");
-            } else {
-                loader.setController(new PatientPortalController(userID, loader, con));
-                loader.setLocation(getClass().getResource("PatientPortal.fxml"));
-                loader.setRoot(null);
-                Parent patientPortal = loader.load();
-                Scene patientPortalScene = new Scene(patientPortal);
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
+                ResultSet rs1 = s.executeQuery("SELECT Username from PatientData where Username='" + usernameField.getText() + "'");
+                //If the username is taken
+                if (rs1.next()) {
+                    CreateAccountStatusLabel.setTextFill(Color.RED);
+                    CreateAccountStatusLabel.setText("Username must be unique");
+                } else {
+                    try {
+                        int ID;
+                        ResultSet rs2 = s.executeQuery("SELECT COUNT(*) from PatientData");
+                        //Get the ID
+                        if (rs2.next()) {
+                            userID = -(rs2.getInt(1) + 1);
+                            //Case for there being no patients
+                        } else {
+                            userID = -1;
+                        }
 
-                //Get the stage
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                window.setScene(patientPortalScene);
-                window.show();
+                        s.executeUpdate("INSERT INTO PatientData VALUES('"
+                                + userID + "', '"
+                                + FirstNameField.getText() + "', '"
+                                + LastNameField.getText() + "', '"
+                                + DOBPicker.getValue().toString() + "', ' "
+                                + PharmacyField.getText() + " ', '"
+                                + PhoneNumField.getText() + "', '"
+                                + AddressField.getText() + "', '"
+                                + InsuranceField.getText() + "', '"
+                                + usernameField.getText() + "', '"
+                                + passwordField.getText() + "')"
+                        );
+
+                        loader.setController(new PatientPortalController(userID, loader, con));
+                        loader.setLocation(getClass().getResource("PatientPortal.fxml"));
+                        loader.setRoot(null);
+                        Parent patientPortal = loader.load();
+                        Scene patientPortalScene = new Scene(patientPortal);
+
+                        //Get the stage
+                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                        window.setScene(patientPortalScene);
+                        window.show();
+
+                    } catch (SQLException f) {
+                        f.printStackTrace();
+                    }
+                }
+            } catch (SQLException e) {
+
             }
+
+
         }
 
     }

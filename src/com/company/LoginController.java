@@ -103,7 +103,7 @@ public class LoginController {
             Statement s = connection.createStatement();
             ResultSet r = s.executeQuery("select PatientID from patientdata where Username='" + username + "' AND Password='" + password + "'");
             //Check for if the set is empty. If not then log in
-            if (r.isFirst()) {
+            if (r.next()) {
                 this.userID= r.getInt("PatientID");
                 System.out.println(this.userID + "\n");
                 loader.setController(new PatientPortalController(userID, loader, con));
