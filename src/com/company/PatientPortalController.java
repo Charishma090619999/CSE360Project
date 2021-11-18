@@ -20,6 +20,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
+/**
+ * Author: Charishma
+ */
 public class PatientPortalController {
 	String temp=" ";
     @FXML
@@ -418,6 +421,7 @@ public class PatientPortalController {
     protected void onSendToNurseClick(ActionEvent event) {
         MessageStatusLabel.setText("Message Sent to Nurse.");
         MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+    
     }
 
     @FXML
