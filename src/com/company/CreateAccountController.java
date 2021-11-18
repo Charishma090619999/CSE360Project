@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
@@ -49,6 +46,8 @@ public class CreateAccountController {
     private PasswordField passwordField;
     @FXML
     private Label CreateAccountStatusLabel;
+    @FXML
+    private ListView<Doctor> DoctorSelectList;
 
     public CreateAccountController(int userID, FXMLLoader loader, connection con) {
         //If you were logged in before, now you aren't.
@@ -69,6 +68,10 @@ public class CreateAccountController {
             Statement s = connection.createStatement();
             //Gets all doctors. Currently is unusued.
             ResultSet r = s.executeQuery("SELECT UserID, FirstName, LastName FROM employee WHERE EmployeeType=0");
+            while (r.next()) {
+                Doctor newDoc = new Doctor(r.getString(2), r.getString(3), r.getInt(1));
+                DoctorSelectList.getItems().add(newDoc);
+            }
 
             //Close connection when done
             if (connection != null) {
@@ -133,6 +136,12 @@ public class CreateAccountController {
                             userID = -1;
                         }
 
+                        Doctor myDoc = DoctorSelectList.getSelectionModel().getSelectedItem();
+                        int doctorID = 0;
+                        if (myDoc != null) {
+                            doctorID = myDoc.getUserID();
+                        }
+
                         s.executeUpdate("INSERT INTO PatientData VALUES('"
                                 + userID + "', '"
                                 + FirstNameField.getText() + "', '"
@@ -143,7 +152,8 @@ public class CreateAccountController {
                                 + AddressField.getText() + "', '"
                                 + InsuranceField.getText() + "', '"
                                 + usernameField.getText() + "', '"
-                                + passwordField.getText() + "')"
+                                + passwordField.getText() + "', '"
+                                + doctorID + "')"
                         );
 
                         loader.setController(new PatientPortalController(userID, loader, con));
@@ -162,7 +172,7 @@ public class CreateAccountController {
                     }
                 }
             } catch (SQLException e) {
-
+                e.printStackTrace();
             }
 
 
