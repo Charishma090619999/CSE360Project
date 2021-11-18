@@ -67,29 +67,54 @@ public class LoginController {
 
     @FXML
     protected void onEmployeeLoginClick(ActionEvent event) throws IOException {
-        if (employeeUsername.getText().equals("doctor")) {
-            loader.setController(new DoctorPortalController(userID, loader, con));
-            loader.setLocation(getClass().getResource("DoctorPortal.fxml"));
-            loader.setRoot(null);
-            Parent createAccount = loader.load();
-            Scene createAccountScene = new Scene(createAccount);
 
-            //Get the stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(createAccountScene);
-            window.show();
-        } else if (employeeUsername.getText().equals("nurse")) {
-            loader.setController(new NursePortalController(userID, loader, con));
-            loader.setLocation(getClass().getResource("NursePortal.fxml"));
-            loader.setRoot(null);
-            Parent createAccount = loader.load();
-            Scene createAccountScene = new Scene(createAccount);
+        String username = employeeUsername.getText();
+        String password = employeePassword.getText();
 
-            //Get the stage
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(createAccountScene);
-            window.show();
+        try {
+            Connection connection = con.getdbconnection();
+            Statement s = connection.createStatement();
+            ResultSet r = s.executeQuery("select UserID, EmployeeType from employee where Username='" + username + "' AND Password='" + password + "'");
+            //Check for if the set is empty. If not then log in
+            if (r.next()) {
+                this.userID= r.getInt("userID");
+                int type = r.getInt("EmployeeType");
+
+                if (type == 0) {
+                    loader.setController(new DoctorPortalController(userID, loader, con));
+                    loader.setLocation(getClass().getResource("DoctorPortal.fxml"));
+                    loader.setRoot(null);
+                    Parent createAccount = loader.load();
+                    Scene createAccountScene = new Scene(createAccount);
+
+                    //Get the stage
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setScene(createAccountScene);
+                    window.show();
+                } else {
+                    loader.setController(new NursePortalController(userID, loader, con));
+                    loader.setLocation(getClass().getResource("NursePortal.fxml"));
+                    loader.setRoot(null);
+                    Parent createAccount = loader.load();
+                    Scene createAccountScene = new Scene(createAccount);
+
+                    //Get the stage
+                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    window.setScene(createAccountScene);
+                    window.show();
+                }
+
+            } else {
+                EmployeeLoginStatusLabel.setTextFill(Color.RED);
+                EmployeeLoginStatusLabel.setText("Incorrect username or password");
+            }
+        } catch (SQLException e) {
+            System.out.println("Connection has not been established");
+            e.printStackTrace();
+            PatientLoginStatusLabel.setTextFill(Color.RED);
+            PatientLoginStatusLabel.setText("Error: Unable to connect to database");
         }
+
     }
 
     @FXML
@@ -103,7 +128,7 @@ public class LoginController {
             Statement s = connection.createStatement();
             ResultSet r = s.executeQuery("select PatientID from patientdata where Username='" + username + "' AND Password='" + password + "'");
             //Check for if the set is empty. If not then log in
-            if (r.isFirst()) {
+            if (r.next()) {
                 this.userID= r.getInt("PatientID");
                 System.out.println(this.userID + "\n");
                 loader.setController(new PatientPortalController(userID, loader, con));
@@ -120,9 +145,6 @@ public class LoginController {
             } else {
                 PatientLoginStatusLabel.setTextFill(Color.RED);
                 PatientLoginStatusLabel.setText("Incorrect username or password");
-            }
-            if (connection != null) {
-                connection.close();
             }
         } catch (SQLException e) {
             System.out.println("Connection has not been established");

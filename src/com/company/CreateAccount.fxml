@@ -64,7 +64,7 @@
             <HBox fx:id="InfoPane" alignment="CENTER_LEFT" spacing="10.0">
                <children>
                   <Label prefHeight="20.0" prefWidth="90.0" text="Pharmacy" />
-                  <TextField fx:id="AddressField" promptText="Enter your home address" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="PharmacyField" promptText="Enter your pharmacy location" HBox.hgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets left="20.0" />
@@ -79,7 +79,7 @@
                </padding>
                <children>
                   <Label prefHeight="20.0" prefWidth="90.0" text="Your Address" />
-                  <TextField fx:id="PharmacyField" promptText="Enter your pharmacy location" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="AddressField" promptText="Enter your home address" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets right="20.0" />
