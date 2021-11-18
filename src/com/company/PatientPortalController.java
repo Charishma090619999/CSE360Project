@@ -199,7 +199,7 @@ public class PatientPortalController {
 
             //Populate the doctor tab with all the doctors except the patient's
             ResultSet rs5 = s.executeQuery("SELECT FirstName, LastName, UserID FROM employee" +
-                    " WHERE UserID!=(SELECT doctorID from PatientData WHERE patientID=" + userID + ");");
+                    " WHERE employeeType=0 AND UserID!=(SELECT doctorID from PatientData WHERE patientID=" + userID + ");");
             while (rs5.next()) {
                 Doctor newDoc = new Doctor(rs5.getString("FirstName"),
                         rs5.getString("LastName"),
