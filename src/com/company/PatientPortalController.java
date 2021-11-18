@@ -301,16 +301,36 @@ public class PatientPortalController {
             UpdateInfoStatusLabel.setText("Incorrect Password");
             //System.out.println("Password: " + verifyInfoEditField.getText());
         } else {
-            UpdateInfoStatusLabel.setTextFill(Color.LIMEGREEN);
-            UpdateInfoStatusLabel.setText("Information updated.");
 
-            //Update the labels. After this we should also query the database.
-            PatientNameLabel.setText(FirstNameField.getText() + " " + LastNameField.getText());
-            PatientDOBLabel.setText(DOBField.getValue().toString());
-            PatientPharmacyLabel.setText(PharmacyField.getText());
-            PatientPhoneLabel.setText(PhoneField.getText());
-            PatientAddressLabel.setText(AddressField.getText());
-            PatientInsuranceLabel.setText(InsuranceField.getText());
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s=connection.createStatement();
+                s.executeUpdate("UPDATE PatientData " +
+                        "SET FirstName='"+FirstNameField.getText() +
+                        "',LastName='"+LastNameField.getText() +
+                        "',DOB='"+DOBField.getValue().toString() +
+                        "',Pharmacy='"+PharmacyField.getText() +
+                        "',PhoneNo='"+PhoneField.getText() +
+                        "',Address='"+AddressField.getText() +
+                        "',Insurance='"+InsuranceField.getText() +
+                        "' WHERE PatientID='"+userID+"';"
+                );
+
+                UpdateInfoStatusLabel.setTextFill(Color.LIMEGREEN);
+                UpdateInfoStatusLabel.setText("Information updated.");
+
+                //Update the labels. After this we should also query the database.
+                PatientNameLabel.setText(FirstNameField.getText() + " " + LastNameField.getText());
+                PatientDOBLabel.setText(DOBField.getValue().toString());
+                PatientPharmacyLabel.setText(PharmacyField.getText());
+                PatientPhoneLabel.setText(PhoneField.getText());
+                PatientAddressLabel.setText(AddressField.getText());
+                PatientInsuranceLabel.setText(InsuranceField.getText());
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
         verifyInfoEditField.setText("");
     }
@@ -334,22 +354,53 @@ public class PatientPortalController {
             UpdateAccountStatusLabel.setText("Incorrect Password");
             //This check will be replaced by checking if the new username equals any current username
             //and **not  the current user's**. This is just a temporary test.
-        } else if (NewUsernameField.getText().equals(patient.getUsername())) {
-            UpdateAccountStatusLabel.setTextFill(Color.RED);
-            UpdateAccountStatusLabel.setText("New Username must be unique");
         } else if (NewPasswordField.getText().length() < 8) {
             UpdateAccountStatusLabel.setTextFill(Color.RED);
-            UpdateAccountStatusLabel.setText("New Username must be unique");
+            UpdateAccountStatusLabel.setText("Password must be 8 or more characters");
         } else {
             //Replace with database query and a change to the Patient object (when we add it)
-            patient.setUsername(NewUsernameField.getText());
-            patient.setPassword(NewPasswordField.getText());
-            OldUsernameField.setText("");
-            OldPasswordField.setText("");
-            NewUsernameField.setText("");
-            NewPasswordField.setText("");
-            UpdateAccountStatusLabel.setTextFill(Color.LIMEGREEN);
-            UpdateAccountStatusLabel.setText("Account updated");
+
+            try {
+                boolean unique = true;
+                Connection connect=con.getdbconnection();
+                Statement s=connect.createStatement();
+                ResultSet rs = s.executeQuery("SELECT Username from PatientData WHERE " +
+                        "Username='"+NewUsernameField.getText()+"' " +
+                        "AND PatientID!=" + userID + ";");
+                if (rs.next()) {
+                    unique = false;
+                }
+
+                if (unique) {
+
+                    s.executeUpdate("UPDATE PatientData " +
+                            "SET Username='" + NewUsernameField.getText() +
+                            "',Password='" + NewPasswordField.getText() +
+                            "' WHERE PatientID = " + userID + ";"
+                    );
+
+                    patient.setUsername(NewUsernameField.getText());
+                    patient.setPassword(NewPasswordField.getText());
+
+                    patient.setUsername(NewUsernameField.getText());
+                    patient.setPassword(NewPasswordField.getText());
+                    OldUsernameField.setText("");
+                    OldPasswordField.setText("");
+                    NewUsernameField.setText("");
+                    NewPasswordField.setText("");
+                    UpdateAccountStatusLabel.setTextFill(Color.LIMEGREEN);
+                    UpdateAccountStatusLabel.setText("Account updated");
+
+                } else {
+                    UpdateAccountStatusLabel.setTextFill(Color.RED);
+                    UpdateAccountStatusLabel.setText("That username is already in use!");
+                }
+
+            }
+            catch(Exception e)
+            {
+                System.out.println(" ");
+            }
         }
     }
 
