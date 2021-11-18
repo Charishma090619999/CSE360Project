@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0fa1cdba-30e7-4ab9-996e-c222cbfd9285" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/company/Message.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/Patient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/company/Record.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/CreateAccountController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/Doctor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortalController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CSE360Project/com/company/PatientPortalController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/CreateAccountController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Doctor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/PatientPortalController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -106,7 +99,7 @@
       <workItem from="1637123710580" duration="10884000" />
       <workItem from="1637187009748" duration="1804000" />
       <workItem from="1637199338396" duration="6531000" />
-      <workItem from="1637205942100" duration="6415000" />
+      <workItem from="1637205942100" duration="7598000" />
     </task>
     <servers />
   </component>
