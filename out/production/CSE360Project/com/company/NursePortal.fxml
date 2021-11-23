@@ -87,6 +87,55 @@
             </AnchorPane>
          </content>
       </Tab>
+      <Tab text="Add Record to Patient">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <HBox layoutX="2.0" prefHeight="370.0" prefWidth="600.0" spacing="20.0">
+                     <padding>
+                        <Insets bottom="15.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <children>
+                        <VBox alignment="BOTTOM_LEFT" prefHeight="341.0" prefWidth="230.0" spacing="5.0">
+                           <children>
+                              <Label prefHeight="44.0" prefWidth="222.0" text="Select a patient to add a record to" wrapText="true" />
+                              <ListView fx:id="AddRecordList" prefHeight="299.0" prefWidth="128.0" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefHeight="345.0" prefWidth="319.0" spacing="5.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="319.0" spacing="5.0">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Height (cm)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="HeightField" prefHeight="40.0" prefWidth="80.0" promptText="Height" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Weight (kg)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="WeightField" prefHeight="40.0" prefWidth="80.0" promptText="Weight" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="319.0" spacing="5.0">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Heart Rate (bpm)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="HeartrateField" prefHeight="40.0" prefWidth="80.0" promptText="Heart Rate" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Blood Pres. (sys/dia)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="BloodField" prefHeight="40.0" prefWidth="112.0" promptText="Blood Pressure" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="319.0" spacing="5.0">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Temperature" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="TemperatureField" prefHeight="40.0" prefWidth="80.0" promptText="Height" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Weight (kg)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="WeightField1" prefHeight="40.0" prefWidth="80.0" promptText="Weight" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
       <Tab fx:id="ChangeDoctorTab" text="Add/Remove Doctors">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

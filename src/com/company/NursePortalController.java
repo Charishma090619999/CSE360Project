@@ -7,13 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class NursePortalController {
 
@@ -21,9 +22,62 @@ public class NursePortalController {
     private FXMLLoader loader;
     private connection con;
 
-    //Placeholders until actual Doctor objects are added
-    private String username = "username";
-    private String password = "password";
+    private Nurse nurse;
+    private Doctor doctor;
+
+    //The Patient Info Tab
+    @FXML
+    private ListView<Patient> PatientList;
+    @FXML
+    private ListView<Record> PatientRecordList; //Shows a list of health records' date and who entered them.
+    @FXML
+    private Label PatientNameLabel;
+    @FXML
+    private Label PatientDOBLabel;
+    @FXML
+    private Label PatientPharmacyLabel;
+    @FXML
+    private Label PatientPhoneLabel;
+    @FXML
+    private Label PatientAddressLabel;
+    @FXML
+    private Label PatientInsuranceLabel;
+    @FXML
+    private Label DoctorLabel;
+    @FXML
+    private Label NurseLabel;
+    @FXML
+    private TextArea PatientRecordTextArea; //Shows the selected record's text.
+
+    //The Add Record tab
+    @FXML
+    private ListView<Patient> AddRecordList;
+    @FXML
+    private TextField HeightField;
+    @FXML
+    private TextField WeightField;
+    @FXML
+    private TextField HeartRateField;
+    @FXML
+    private TextField BloodField;
+    @FXML
+    private TextField TemperatureField;
+    @FXML
+    private TextField BreathField;
+    @FXML
+    private TextArea ObservationField;
+    @FXML
+    private Label AddRecordStatusLabel;
+
+    //The Add/Remove Doctors tab
+    @FXML
+    private ListView<Doctor> AvailableDoctorList;
+    @FXML
+    private ListView<Doctor> YourDoctorList;
+    @FXML
+    private Label ChangeDoctorStatusLabel;
+    @FXML
+    private PasswordField verifyDoctorChangeField;
 
     //The Edit Account (change username/pass) Tab objects:
     @FXML
@@ -45,6 +99,18 @@ public class NursePortalController {
     @FXML
     private Label NewPasswordStatusLabel;
 
+    //The Message Tab objects:
+    @FXML
+    private ListView<Patient> PatientMessageList;
+    @FXML
+    private Label MessageStatusLabel;
+    @FXML
+    private ListView<Message> MessagesList;
+    @FXML
+    private TextArea ReadMessageField;
+    @FXML
+    private TextArea SentMessageField;
+
     public NursePortalController(int userID, FXMLLoader loader, connection con) {
         this.userID = userID;
         this.loader = loader;
@@ -59,11 +125,19 @@ public class NursePortalController {
         System.out.println("Nurse Pane loaded and initialization begun!");
         System.out.println("\tLoader: " + loader);
         System.out.println("\tuserID: " + userID);
+
+
+
+    }
+
+    @FXML
+    public void onAddRecordClick(ActionEvent event) {
+
     }
 
     @FXML
     protected void onAddDoctorClick(ActionEvent event) {
-
+        
     }
 
     @FXML
@@ -84,37 +158,66 @@ public class NursePortalController {
                 NewPasswordField.getText().equals("")) {
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("All fields must be completed");
-        } else if (!OldUsernameField.getText().equals(username)) {
+        } else if (!OldUsernameField.getText().equals(nurse.getUsername())) {
+            System.out.println("Entered Username: " + nurse.getUsername());
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Incorrect Username");
-        } else if (!OldPasswordField.getText().equals(password)) {
+        } else if (!OldPasswordField.getText().equals(nurse.getPassword())) {
+            System.out.println("Entered Password: " + nurse.getPassword());
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Incorrect Password");
             //This check will be replaced by checking if the new username equals any current username
             //and **not  the current user's**. This is just a temporary test.
-        } else if (NewUsernameField.getText().equals(username)) {
-            UpdateAccountStatusLabel.setTextFill(Color.RED);
-            UpdateAccountStatusLabel.setText("New Username must be unique");
         } else if (NewPasswordField.getText().length() < 8) {
             UpdateAccountStatusLabel.setTextFill(Color.RED);
-            UpdateAccountStatusLabel.setText("New Username must be unique");
+            UpdateAccountStatusLabel.setText("Password must be 8 or more characters");
         } else {
-            //Replace with database query and a change to the Patient object (when we add it)
-            this.username = NewUsernameField.getText();
-            this.password = NewPasswordField.getText();
-            OldUsernameField.setText("");
-            OldPasswordField.setText("");
-            NewUsernameField.setText("");
-            NewPasswordField.setText("");
-            UpdateAccountStatusLabel.setTextFill(Color.LIMEGREEN);
-            UpdateAccountStatusLabel.setText("Account updated");
+
+            try {
+                boolean unique = true;
+                Connection connect = con.getdbconnection();
+                Statement s = connect.createStatement();
+                ResultSet rs = s.executeQuery("SELECT Username from employee WHERE " +
+                        "Username='" + NewUsernameField.getText() + "' " +
+                        "AND userID!=" + userID + ";");
+                if (rs.next()) {
+                    unique = false;
+                }
+
+                if (unique) {
+
+                    s.executeUpdate("UPDATE employee " +
+                            "SET Username='" + NewUsernameField.getText() +
+                            "',Password='" + NewPasswordField.getText() +
+                            "' WHERE userID = " + userID + ";"
+                    );
+
+                    nurse.setUsername(NewUsernameField.getText());
+                    nurse.setPassword(NewPasswordField.getText());
+
+                    OldUsernameField.setText("");
+                    OldPasswordField.setText("");
+                    NewUsernameField.setText("");
+                    NewPasswordField.setText("");
+
+                    UpdateAccountStatusLabel.setTextFill(Color.LIMEGREEN);
+                    UpdateAccountStatusLabel.setText("Account updated");
+
+                } else {
+                    UpdateAccountStatusLabel.setTextFill(Color.RED);
+                    UpdateAccountStatusLabel.setText("That username is already in use!");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     //Handles status messages for the Change username/password tab fields
     @FXML
     protected void onOldUsernameFieldType(Event event) {
-        if (!OldUsernameField.getText().equals(username)) {
+        if (!OldUsernameField.getText().equals(nurse.getUsername())) {
             OldUsernameStatusLabel.setText("Incorrect Username");
             OldUsernameStatusLabel.setTextFill(Color.RED);
         } else {
@@ -125,7 +228,7 @@ public class NursePortalController {
 
     @FXML
     protected void onOldPasswordFieldType(Event event) {
-        if (!OldPasswordField.getText().equals(password)) {
+        if (!OldPasswordField.getText().equals(nurse.getPassword())) {
             OldPasswordStatusLabel.setText("Incorrect Password");
             OldPasswordStatusLabel.setTextFill(Color.RED);
         } else {
@@ -141,7 +244,7 @@ public class NursePortalController {
         if (NewUsernameField.getText().equals("")) {
             NewUsernameStatusLabel.setTextFill(Color.RED);
             NewUsernameStatusLabel.setText("Must supply a username");
-        } else if (NewUsernameField.getText().equals(username)) {
+        } else if (NewUsernameField.getText().equals(nurse.getUsername())) {
             NewUsernameStatusLabel.setTextFill(Color.RED);
             NewUsernameStatusLabel.setText("Username already in use");
         } else {
