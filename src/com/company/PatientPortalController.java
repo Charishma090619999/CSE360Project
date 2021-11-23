@@ -35,6 +35,8 @@ public class PatientPortalController {
     private int nurseID;
 
     private Patient patient;
+    private Doctor doctor;
+    private Nurse nurse;
 
     //The Patient Info Tab objects:
     //Might end up changing this to hold a Record object type so that we can display date and name in the
@@ -53,6 +55,10 @@ public class PatientPortalController {
     private Label PatientAddressLabel;
     @FXML
     private Label PatientInsuranceLabel;
+    @FXML
+    private Label DoctorLabel;
+    @FXML
+    private Label NurseLabel;
     @FXML
     private TextArea PatientRecordTextArea; //Shows the selected record's text.
 
@@ -144,18 +150,38 @@ public class PatientPortalController {
             doctorID = rs1.getInt("doctorID");
             if (doctorID != 0) {
                 Statement s2 = connection.createStatement();
-                ResultSet rs2 = s2.executeQuery("SELECT nurseID FROM employee " +
+                ResultSet rs2 = s2.executeQuery("SELECT nurseID, FirstName, LastName FROM employee " +
                         "WHERE userID='" + doctorID + "';");
                 rs2.next();
-                nurseID = rs2.getInt(1);
 
-                ResultSet rs2_2 = s2.executeQuery("SELECT FirstName, LastName FROM employee " +
-                        "WHERE userID=" + doctorID + ";");
-                //bad solution, this should be reimplemented using a Doctor object that is held by the controller.
-                rs2_2.next();
-                CurrentDoctorLabel.setText("Dr. " + rs2_2.getString("FirstName") + " " +
-                        rs2_2.getString("LastName"));
+                doctor = new Doctor(
+                        rs2.getString("FirstName"),
+                        rs2.getString("LastName"),
+                        doctorID
+                );
 
+                DoctorLabel.setText(doctor.toString());
+
+                nurseID = rs2.getInt("nurseID");
+                if (nurseID != 0) {
+                    ResultSet rs2_2 = s2.executeQuery("SELECT FirstName, LastName FROM employee " +
+                            "WHERE userID='" + nurseID + "';");
+                    rs2_2.next();
+                    nurse = new Nurse(rs2_2.getString("FirstName"),
+                            rs2_2.getString("LastName"),
+                            nurseID
+                    );
+
+                    NurseLabel.setText(nurse.toString());
+                } else {
+                    NurseLabel.setText("No nurse");
+                }
+
+
+                CurrentDoctorLabel.setText(doctor.toString());
+
+            } else {
+                DoctorLabel.setText("No doctor");
             }
 
             patient = new Patient(
@@ -304,16 +330,16 @@ public class PatientPortalController {
 
             try {
                 Connection connection = con.getdbconnection();
-                Statement s=connection.createStatement();
+                Statement s = connection.createStatement();
                 s.executeUpdate("UPDATE PatientData " +
-                        "SET FirstName='"+FirstNameField.getText() +
-                        "',LastName='"+LastNameField.getText() +
-                        "',DOB='"+DOBField.getValue().toString() +
-                        "',Pharmacy='"+PharmacyField.getText() +
-                        "',PhoneNo='"+PhoneField.getText() +
-                        "',Address='"+AddressField.getText() +
-                        "',Insurance='"+InsuranceField.getText() +
-                        "' WHERE PatientID='"+userID+"';"
+                        "SET FirstName='" + FirstNameField.getText() +
+                        "',LastName='" + LastNameField.getText() +
+                        "',DOB='" + DOBField.getValue().toString() +
+                        "',Pharmacy='" + PharmacyField.getText() +
+                        "',PhoneNo='" + PhoneField.getText() +
+                        "',Address='" + AddressField.getText() +
+                        "',Insurance='" + InsuranceField.getText() +
+                        "' WHERE PatientID='" + userID + "';"
                 );
 
                 UpdateInfoStatusLabel.setTextFill(Color.LIMEGREEN);
@@ -362,10 +388,10 @@ public class PatientPortalController {
 
             try {
                 boolean unique = true;
-                Connection connect=con.getdbconnection();
-                Statement s=connect.createStatement();
+                Connection connect = con.getdbconnection();
+                Statement s = connect.createStatement();
                 ResultSet rs = s.executeQuery("SELECT Username from PatientData WHERE " +
-                        "Username='"+NewUsernameField.getText()+"' " +
+                        "Username='" + NewUsernameField.getText() + "' " +
                         "AND PatientID!=" + userID + ";");
                 if (rs.next()) {
                     unique = false;
@@ -396,9 +422,7 @@ public class PatientPortalController {
                     UpdateAccountStatusLabel.setText("That username is already in use!");
                 }
 
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println(" ");
             }
         }
@@ -469,34 +493,44 @@ public class PatientPortalController {
                     Doctor doc = ChangeDoctorList.getSelectionModel().getSelectedItem();
                     Connection connection = con.getdbconnection();
                     Statement s = connection.createStatement();
-                    ResultSet rs1 = s.executeQuery("SELECT FirstName, LastName FROM employee " +
-                            "WHERE userID=" + doctorID + ";");
-                    Doctor oldDoc = null;
-                    if (rs1.next()) {
-                        oldDoc = new Doctor(rs1.getString("FirstName"),
-                                rs1.getString("LastName"),
-                                doctorID
-                        );
+
+                    if (doctor != null) {
+                        ChangeDoctorList.getItems().add(doctor);
                     }
 
+                    //Change the doctor
                     doctorID = doc.getUserID();
+                    doctor = doc;
                     s.executeUpdate("UPDATE PatientData SET DoctorID=" + doctorID + " WHERE PatientID=" + userID + ";");
 
-                    CurrentDoctorLabel.setText(doc.toString());
+                    CurrentDoctorLabel.setText(doctor.toString());
+
+                    ResultSet rs1 = s.executeQuery("SELECT FirstName, LastName, userID FROM employee " +
+                            "WHERE userID=(SELECT nurseID FROM employee WHERE userID=" + doctorID + ");");
+                    if (rs1.next()) {
+                        nurseID = rs1.getInt("userID");
+                        nurse = new Nurse(
+                                rs1.getString("FirstName"),
+                                rs1.getString("LastName"),
+                                nurseID
+                        );
+
+                        NurseLabel.setText(nurse.toString());
+                    } else {
+                        nurse = null;
+                        nurseID = 0;
+                    }
 
                     ChangeDoctorStatusLabel.setTextFill(Color.LIMEGREEN);
                     ChangeDoctorStatusLabel.setText("Your doctor has been updated");
 
-                    ChangeDoctorList.getItems().remove(doc);
-                    if (oldDoc != null) {
-                        ChangeDoctorList.getItems().add(oldDoc);
-                    }
+                    ChangeDoctorList.getItems().remove(doctor);
+                    CurrentDoctorLabel.setText(ChangeDoctorList.getSelectionModel().getSelectedItem().toString());
                 } catch (Exception e) {
                     e.printStackTrace();
                     ChangeDoctorStatusLabel.setTextFill(Color.RED);
                     ChangeDoctorStatusLabel.setText("ERROR: Cannot connect to database.");
                 }
-                CurrentDoctorLabel.setText(ChangeDoctorList.getSelectionModel().getSelectedItem().toString());
             }
         } else {
             ChangeDoctorStatusLabel.setTextFill(Color.RED);
@@ -507,14 +541,76 @@ public class PatientPortalController {
 
     @FXML
     protected void onSendToDoctorClick(ActionEvent event) {
-        MessageStatusLabel.setText("Message Sent to Doctor.");
-        MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+
+        if (doctorID == 0) {
+            MessageStatusLabel.setText("You currently do not have a doctor.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        } else if (!SentMessageField.getText().equals("")) {
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
+
+                //Create message using Doctor's name for storing in the list.
+                Message newMsg = new Message(patient.toString(), doctor.toString(), SentMessageField.getText());
+                MessagesList.getItems().add(newMsg);
+
+                s.executeUpdate("INSERT INTO Messages VALUES("
+                        + userID + ", "
+                        + doctorID + ", '"
+                        + SentMessageField.getText() + "');"
+                );
+
+                MessageStatusLabel.setText("Message Sent to Doctor.");
+                MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+
+                SentMessageField.setText("");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                MessageStatusLabel.setText("Error connecting to database");
+                MessageStatusLabel.setTextFill(Color.RED);
+            }
+        } else {
+            MessageStatusLabel.setText("You need to enter a message to send.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        }
+
     }
 
     @FXML
     protected void onSendToNurseClick(ActionEvent event) {
-        MessageStatusLabel.setText("Message Sent to Nurse.");
-        MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+        if (nurseID == 0) {
+            MessageStatusLabel.setText("You currently do not have a nurse.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        } else if (!SentMessageField.getText().equals("")) {
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
+
+                //Create message using Doctor's name for storing in the list.
+                Message newMsg = new Message(patient.toString(), nurse.toString(), SentMessageField.getText());
+                MessagesList.getItems().add(newMsg);
+
+                s.executeUpdate("INSERT INTO Messages VALUES("
+                        + userID + ", "
+                        + nurseID + ", '"
+                        + SentMessageField.getText() + "');"
+                );
+
+                MessageStatusLabel.setText("Message Sent to Nurse.");
+                MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+
+                SentMessageField.setText("");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                MessageStatusLabel.setText("Error connecting to database");
+                MessageStatusLabel.setTextFill(Color.RED);
+            }
+        } else {
+            MessageStatusLabel.setText("You need to enter a message to send.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        }
     }
 
     @FXML
