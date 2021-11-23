@@ -11,7 +11,20 @@ public class Patient {
     private String username;
     private String password;
 
-    public Patient(String firstName, String lastName, int userID, int doctorID, int nurseID) {
+    private String DOB;
+    private String Pharmacy;
+    private String Phone;
+    private String Address;
+    private String Insurance;
+
+    private String doctor;
+    private String nurse;
+
+    public Patient(String firstName,
+                   String lastName,
+                   int userID,
+                   int doctorID,
+                   int nurseID) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userID;
@@ -19,7 +32,14 @@ public class Patient {
         this.nurseID = nurseID;
     }
 
-    public Patient(String firstName, String lastName, int userID, int doctorID, int nurseID, String username, String password) {
+    //Used for patient portal
+    public Patient(String firstName,
+                   String lastName,
+                   int userID,
+                   int doctorID,
+                   int nurseID,
+                   String username,
+                   String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userID;
@@ -27,6 +47,29 @@ public class Patient {
         this.nurseID = nurseID;
         this.username = username;
         this.password = password;
+    }
+
+    //Used for patient lists
+    public Patient(String firstName,
+                   String lastName,
+                   int userID,
+                   String DOB,
+                   String Pharmacy,
+                   String Phone,
+                   String Address,
+                   String Insurance,
+                   String doctor,
+                   String nurse) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userID = userID;
+        this.DOB = DOB;
+        this.Pharmacy = Pharmacy;
+        this.Phone = Phone;
+        this.Address = Address;
+        this.Insurance = Insurance;
+        this.doctor = doctor;
+        this.nurse = nurse;
     }
 
     public String getFirstName() {
@@ -72,6 +115,15 @@ public class Patient {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
+    public String getAddress() {return Address;}
+    public String getDOB() {return DOB;}
+    public String getInsurance() {return Insurance;}
+    public String getPharmacy() {return Pharmacy;}
+    public String getPhone() {return Phone;}
+    public String getDoctor() {return doctor;}
+    public String getNurse() {return nurse;}
 
     @Override
     public String toString() {

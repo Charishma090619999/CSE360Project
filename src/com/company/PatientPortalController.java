@@ -144,14 +144,27 @@ public class PatientPortalController {
             Statement s = connection.createStatement();
 
             //Used to populate the labels on the first tab
-            ResultSet rs1 = s.executeQuery("SELECT FirstName, LastName, DOB, Pharmacy, PhoneNo, Address, Insurance, Username, Password, DoctorID " +
+            ResultSet rs1 = s.executeQuery("SELECT " +
+                    "FirstName, " +
+                    "LastName, " +
+                    "DOB, " +
+                    "Pharmacy, " +
+                    "PhoneNo, " +
+                    "Address, " +
+                    "Insurance, " +
+                    "Username, " +
+                    "Password, " +
+                    "DoctorID " +
                     "FROM PatientData WHERE PatientID='" + userID + "';");
             rs1.next();
             doctorID = rs1.getInt("doctorID");
             if (doctorID != 0) {
                 Statement s2 = connection.createStatement();
-                ResultSet rs2 = s2.executeQuery("SELECT nurseID, FirstName, LastName FROM employee " +
-                        "WHERE userID='" + doctorID + "';");
+                ResultSet rs2 = s2.executeQuery("SELECT " +
+                        "nurseID, " +
+                        "FirstName, " +
+                        "LastName " +
+                        "FROM employee WHERE userID='" + doctorID + "';");
                 rs2.next();
 
                 doctor = new Doctor(
@@ -164,8 +177,10 @@ public class PatientPortalController {
 
                 nurseID = rs2.getInt("nurseID");
                 if (nurseID != 0) {
-                    ResultSet rs2_2 = s2.executeQuery("SELECT FirstName, LastName FROM employee " +
-                            "WHERE userID='" + nurseID + "';");
+                    ResultSet rs2_2 = s2.executeQuery("SELECT " +
+                            "FirstName, " +
+                            "LastName " +
+                            "FROM employee WHERE userID='" + nurseID + "';");
                     rs2_2.next();
                     nurse = new Nurse(rs2_2.getString("FirstName"),
                             rs2_2.getString("LastName"),
@@ -202,16 +217,22 @@ public class PatientPortalController {
 
             //Now we populate the records on the first pane
             //Get all the records
-            ResultSet rs3 = s.executeQuery("SELECT userID, currentDate, recordData FROM PatientRecords " +
-                    "WHERE patientID='" + userID + "';");
+            ResultSet rs3 = s.executeQuery("SELECT " +
+                    "userID, " +
+                    "currentDate, " +
+                    "recordData " +
+                    "FROM PatientRecords WHERE patientID='" + userID + "';");
 
             //For each record, find the employee and use them to construct a record.
             while (rs3.next()) {
                 int empID = rs3.getInt("userID");
                 //Use the userID from the message to find the employee
                 Statement s2 = connection.createStatement();
-                ResultSet rs4 = s2.executeQuery("SELECT FirstName, LastName, employeeType FROM employee " +
-                        "WHERE userID='" + empID + "';");
+                ResultSet rs4 = s2.executeQuery("SELECT " +
+                        "FirstName, " +
+                        "LastName, " +
+                        "employeeType " +
+                        "FROM employee WHERE userID='" + empID + "';");
                 rs4.next();
                 boolean isDoctor = rs4.getInt("employeeType") == 0;
                 Record newRec = new Record(patient.toString(),
@@ -224,8 +245,12 @@ public class PatientPortalController {
             }
 
             //Populate the doctor tab with all the doctors except the patient's
-            ResultSet rs5 = s.executeQuery("SELECT FirstName, LastName, UserID FROM employee" +
-                    " WHERE employeeType=0 AND UserID!=(SELECT doctorID from PatientData WHERE patientID=" + userID + ");");
+            ResultSet rs5 = s.executeQuery("SELECT " +
+                    "FirstName, " +
+                    "LastName, " +
+                    "UserID " +
+                    "FROM employee WHERE employeeType=0 " +
+                    "AND UserID!=(SELECT doctorID from PatientData WHERE patientID=" + userID + ");");
             while (rs5.next()) {
                 Doctor newDoc = new Doctor(rs5.getString("FirstName"),
                         rs5.getString("LastName"),
@@ -235,8 +260,11 @@ public class PatientPortalController {
             }
 
             //Populate the messages tab
-            ResultSet rs6 = s.executeQuery("SELECT fromID, toID, message FROM messages " +
-                    "WHERE toID=" + userID + " OR fromID=" + userID + ";");
+            ResultSet rs6 = s.executeQuery("SELECT " +
+                    "fromID, " +
+                    "toID, " +
+                    "message " +
+                    "FROM messages WHERE toID=" + userID + " OR fromID=" + userID + ";");
             while (rs6.next()) {
                 int fromID = rs6.getInt("fromID");
                 int toID = rs6.getInt("toID");
@@ -246,24 +274,38 @@ public class PatientPortalController {
                 ResultSet rs6_2;
                 //Patient sender
                 if (fromID < 0) {
-                    rs6_2 = s2.executeQuery("SELECT FirstName, LastName FROM PatientData WHERE patientID=" + fromID + ";");
+                    rs6_2 = s2.executeQuery("SELECT " +
+                            "FirstName, " +
+                            "LastName " +
+                            "FROM PatientData WHERE patientID=" + fromID + ";");
                     rs6_2.next();
                     fromName = rs6_2.getString(1) + " " + rs6_2.getString(2);
                     //Employee sender
                 } else {
-                    rs6_2 = s2.executeQuery("SELECT FirstName, LastName, employeeType FROM employee WHERE userID=" + fromID + ";");
+                    rs6_2 = s2.executeQuery("SELECT " +
+                            "FirstName, " +
+                            "LastName, " +
+                            "employeeType " +
+                            "FROM employee WHERE userID=" + fromID + ";");
                     rs6_2.next();
                     fromName = (rs6_2.getInt(3) == 0) ? ("Dr. " + rs6_2.getString(1) + " " + rs6_2.getString(2)) : (rs6_2.getString(1) + " " + rs6_2.getString(2));
                 }
 
                 //Patient recipient
                 if (toID < 0) {
-                    rs6_2 = s2.executeQuery("SELECT FirstName, LastName FROM PatientData WHERE patientID=" + toID + ";");
+                    rs6_2 = s2.executeQuery("SELECT " +
+                            "FirstName, " +
+                            "LastName " +
+                            "FROM PatientData WHERE patientID=" + toID + ";");
                     rs6_2.next();
                     toName = rs6_2.getString(1) + " " + rs6_2.getString(2);
                     //Employee recipient
                 } else {
-                    rs6_2 = s2.executeQuery("SELECT FirstName, LastName, employeeType FROM employee WHERE userID=" + toID + ";");
+                    rs6_2 = s2.executeQuery("SELECT " +
+                            "FirstName, " +
+                            "LastName, " +
+                            "employeeType " +
+                            "FROM employee WHERE userID=" + toID + ";");
                     rs6_2.next();
                     toName = (rs6_2.getInt(3) == 0) ? ("Dr. " + rs6_2.getString(1) + " " + rs6_2.getString(2)) : (rs6_2.getString(1) + " " + rs6_2.getString(2));
                 }
@@ -384,7 +426,6 @@ public class PatientPortalController {
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Password must be 8 or more characters");
         } else {
-            //Replace with database query and a change to the Patient object (when we add it)
 
             try {
                 boolean unique = true;
@@ -405,15 +446,15 @@ public class PatientPortalController {
                             "' WHERE PatientID = " + userID + ";"
                     );
 
-                    patient.setUsername(NewUsernameField.getText());
-                    patient.setPassword(NewPasswordField.getText());
 
                     patient.setUsername(NewUsernameField.getText());
                     patient.setPassword(NewPasswordField.getText());
+
                     OldUsernameField.setText("");
                     OldPasswordField.setText("");
                     NewUsernameField.setText("");
                     NewPasswordField.setText("");
+
                     UpdateAccountStatusLabel.setTextFill(Color.LIMEGREEN);
                     UpdateAccountStatusLabel.setText("Account updated");
 
@@ -423,7 +464,7 @@ public class PatientPortalController {
                 }
 
             } catch (Exception e) {
-                System.out.println(" ");
+                e.printStackTrace();
             }
         }
     }
@@ -505,7 +546,10 @@ public class PatientPortalController {
 
                     CurrentDoctorLabel.setText(doctor.toString());
 
-                    ResultSet rs1 = s.executeQuery("SELECT FirstName, LastName, userID FROM employee " +
+                    ResultSet rs1 = s.executeQuery("SELECT " +
+                            "FirstName, " +
+                            "LastName, " +
+                            "userID FROM employee " +
                             "WHERE userID=(SELECT nurseID FROM employee WHERE userID=" + doctorID + ");");
                     if (rs1.next()) {
                         nurseID = rs1.getInt("userID");
