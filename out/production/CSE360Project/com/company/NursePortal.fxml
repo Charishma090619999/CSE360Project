@@ -102,32 +102,35 @@
                               <ListView fx:id="AddRecordList" prefHeight="299.0" prefWidth="128.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="345.0" prefWidth="319.0" spacing="5.0">
+                        <VBox alignment="TOP_CENTER" prefHeight="345.0" prefWidth="319.0" spacing="10.0">
                            <children>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="319.0" spacing="5.0">
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Height (cm)" textAlignment="RIGHT" wrapText="true" />
-                                    <TextField fx:id="HeightField" prefHeight="40.0" prefWidth="80.0" promptText="Height" />
+                                    <TextField fx:id="HeightField" prefHeight="32.0" prefWidth="76.0" promptText="Height" />
                                     <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Weight (kg)" textAlignment="RIGHT" wrapText="true" />
-                                    <TextField fx:id="WeightField" prefHeight="40.0" prefWidth="80.0" promptText="Weight" />
+                                    <TextField fx:id="WeightField" prefHeight="32.0" prefWidth="77.0" promptText="Weight" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="319.0" spacing="5.0">
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Heart Rate (bpm)" textAlignment="RIGHT" wrapText="true" />
-                                    <TextField fx:id="HeartrateField" prefHeight="40.0" prefWidth="80.0" promptText="Heart Rate" />
+                                    <TextField fx:id="HeartRateField" prefHeight="32.0" prefWidth="72.0" promptText="Heart Rate" />
                                     <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Blood Pres. (sys/dia)" textAlignment="RIGHT" wrapText="true" />
-                                    <TextField fx:id="BloodField" prefHeight="40.0" prefWidth="112.0" promptText="Blood Pressure" />
+                                    <TextField fx:id="BloodField" prefHeight="32.0" prefWidth="102.0" promptText="Blood Pressure" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="50.0" prefWidth="319.0" spacing="5.0">
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Temperature" textAlignment="RIGHT" wrapText="true" />
-                                    <TextField fx:id="TemperatureField" prefHeight="40.0" prefWidth="80.0" promptText="Height" />
-                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Weight (kg)" textAlignment="RIGHT" wrapText="true" />
-                                    <TextField fx:id="WeightField1" prefHeight="40.0" prefWidth="80.0" promptText="Weight" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="80.0" text="Temperature (°C)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="TemperatureField" prefHeight="32.0" prefWidth="56.0" promptText="Temp." />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="90.0" text="Respir. Rate (breaths/min)" textAlignment="RIGHT" wrapText="true" />
+                                    <TextField fx:id="BreathField" prefHeight="32.0" prefWidth="80.0" promptText="Breathing Rate" />
                                  </children>
                               </HBox>
+                              <TextArea fx:id="ObservationField" prefHeight="130.0" prefWidth="319.0" promptText="Enter any additional observations here..." />
+                              <Label fx:id="AddRecordStatusLabel" alignment="CENTER" prefHeight="25.0" prefWidth="299.0" wrapText="true" />
+                              <Button fx:id="AddRecordButton" mnemonicParsing="false" onAction="#onAddRecordClick" prefHeight="25.0" prefWidth="117.0" text="Add Record" />
                            </children>
                         </VBox>
                      </children>

@@ -16,7 +16,7 @@ public class MainApp extends Application {
         //Application starts at the login screen. Each page handles moving to other pages.
 
         //This connection gets passed around the program so we can access the database in any screen.
-        connection con = new connection("root", "root", "cse360project");
+        connection con = new connection("root", "@CSE360PROJECT", "cse360project");
 
         FXMLLoader loader = new FXMLLoader();
         //When loading, set the location to the file you want and the controller to that screen's controller.

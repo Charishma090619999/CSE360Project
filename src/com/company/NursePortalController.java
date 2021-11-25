@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class NursePortalController {
@@ -23,7 +24,6 @@ public class NursePortalController {
     private connection con;
 
     private Nurse nurse;
-    private Doctor doctor;
 
     //The Patient Info Tab
     @FXML
@@ -126,7 +126,81 @@ public class NursePortalController {
         System.out.println("\tLoader: " + loader);
         System.out.println("\tuserID: " + userID);
 
+        try {
+            Connection connection = con.getdbconnection();
+            Statement s1 = connection.createStatement();
 
+            //Get this nurse's info to create an object
+            ResultSet nurseInfo = s1.executeQuery("SELECT " +
+                    "FirstName, " +
+                    "LastName, " +
+                    "Username, " +
+                    "Password " +
+                    "FROM employee WHERE userID=" + userID + ";");
+
+            nurseInfo.next();
+            nurse = new Nurse(nurseInfo.getString("FirstName"),
+                    nurseInfo.getString("LastName"),
+                    userID,
+                    nurseInfo.getString("Username"),
+                    nurseInfo.getString("Password")
+            );
+
+            System.out.println(userID);
+
+            //Get Patient Info where the doctorID equals the doctors who have the nurse's id for nurseID.
+            ResultSet patientResults = s1.executeQuery("SELECT " +
+                    "FirstName, " +
+                    "LastName, " +
+                    "PatientID, " +
+                    "DOB, " +
+                    "Pharmacy, " +
+                    "PhoneNo, " +
+                    "Address, " +
+                    "Insurance, " +
+                    "DoctorID " +
+                    "FROM PatientData WHERE DoctorID=(" +
+                    "SELECT userID FROM employee WHERE nurseID=" + userID + ");"
+            );
+
+            //While there is a patient belonging to a doctor of this nurse
+            while (patientResults.next()) {
+                System.out.println(patientResults.getString("FirstName"));
+                Statement s2 = connection.createStatement();
+                //Get the doctor's name for the current patient from the result. There has to be a doctor since
+                //that is how we found the patient.
+                ResultSet doctorInfo = s2.executeQuery("SELECT " +
+                        "FirstName, " +
+                        "LastName, " +
+                        "userID " +
+                        "FROM employee WHERE EmployeeType=0 AND userID=" + patientResults.getInt("DoctorID") + ";"
+                );
+                doctorInfo.next();
+                Doctor tempDoc = new Doctor(
+                        doctorInfo.getString("FirstName"),
+                        doctorInfo.getString("LastName"),
+                        doctorInfo.getInt("userID")
+                );
+                Patient newPat = new Patient(
+                        patientResults.getString("FirstName"),
+                        patientResults.getString("LastName"),
+                        patientResults.getInt("PatientID"),
+                        patientResults.getString("DOB"),
+                        patientResults.getString("Pharmacy"),
+                        patientResults.getString("PhoneNo"),
+                        patientResults.getString("Address"),
+                        patientResults.getString("Insurance"),
+                        tempDoc.toString(),
+                        nurse.toString()
+                );
+                PatientList.getItems().add(newPat);
+                AddRecordList.getItems().add(newPat);
+                PatientMessageList.getItems().add(newPat);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -137,7 +211,7 @@ public class NursePortalController {
 
     @FXML
     protected void onAddDoctorClick(ActionEvent event) {
-        
+
     }
 
     @FXML

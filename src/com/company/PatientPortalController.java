@@ -197,6 +197,7 @@ public class PatientPortalController {
 
             } else {
                 DoctorLabel.setText("No doctor");
+                NurseLabel.setText("No nurse");
             }
 
             patient = new Patient(
@@ -221,7 +222,7 @@ public class PatientPortalController {
                     "userID, " +
                     "currentDate, " +
                     "recordData " +
-                    "FROM PatientRecords WHERE patientID='" + userID + "';");
+                    "FROM PatientRecords WHERE userID='" + userID + "';");
 
             //For each record, find the employee and use them to construct a record.
             while (rs3.next()) {
@@ -331,8 +332,13 @@ public class PatientPortalController {
 
 
         ChangeDoctorList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Doctor List selected item: " + observable.getValue().toString());
-            SelectedDoctorLabel.setText(observable.getValue().toString());
+            if (observable.getValue() != null) {
+                System.out.println("Doctor List selected item: " + observable.getValue().toString());
+                SelectedDoctorLabel.setText(observable.getValue().toString());
+            } else {
+                System.out.println("Doctor List selected item: None");
+                SelectedDoctorLabel.setText("");
+            }
             //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
         });
 
@@ -568,8 +574,8 @@ public class PatientPortalController {
                     ChangeDoctorStatusLabel.setTextFill(Color.LIMEGREEN);
                     ChangeDoctorStatusLabel.setText("Your doctor has been updated");
 
-                    ChangeDoctorList.getItems().remove(doctor);
                     CurrentDoctorLabel.setText(ChangeDoctorList.getSelectionModel().getSelectedItem().toString());
+                    ChangeDoctorList.getItems().remove(doctor);
                 } catch (Exception e) {
                     e.printStackTrace();
                     ChangeDoctorStatusLabel.setTextFill(Color.RED);
