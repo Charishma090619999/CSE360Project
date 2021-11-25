@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class NursePortalController {
 
@@ -66,6 +68,8 @@ public class NursePortalController {
     private TextArea ObservationField;
     @FXML
     private Label AddRecordStatusLabel;
+    @FXML
+    private PasswordField verifyAddRecordField;
 
     //The Add/Remove Doctors tab
     @FXML
@@ -261,9 +265,107 @@ public class NursePortalController {
             //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
         });
 
+        //Set the TextArea based on the selected item in the list
         PatientRecordList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Record List selected item: " + observable.getValue());
-            PatientRecordTextArea.setText(observable.getValue().getRecordText());
+            if (observable.getValue() != null) {
+                System.out.println("Record List selected item: " + observable.getValue().toString());
+                PatientRecordTextArea.setText(observable.getValue().getRecordText());
+            } else {
+                System.out.println("Record List selected item: None");
+                PatientRecordTextArea.setText("");
+            }
+            //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
+        });
+
+        //Populate the patient selection list for messages based on the selected patient
+        PatientMessageList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (observable.getValue() != null) {
+                System.out.println("Patient Message List selected item: " + observable.getValue().toString());
+                try {
+                    Connection connection = con.getdbconnection();
+                    Statement s = connection.createStatement();
+
+                    //Get all the messages involving this nurse
+                    ResultSet rs = s.executeQuery("SELECT " +
+                            "fromID, " +
+                            "toID, " +
+                            "message " +
+                            "FROM messages WHERE (" +
+                            "fromID=" + userID + " AND toID=" + observable.getValue().getUserID() + ")" +
+                            "OR (toID=" + userID + " AND fromID=" + observable.getValue().getUserID() + ");"
+                    );
+                    MessagesList.getItems().clear();
+
+                    //For each message, construct a Message obj.
+                    while (rs.next()) {
+                        int fromID = rs.getInt("fromID");
+                        int toID = rs.getInt("toID");
+                        String fromName;
+                        String toName;
+                        Statement s2 = connection.createStatement();
+                        ResultSet rs2;
+                        //Patient sender
+                        if (fromID < 0) {
+                            rs2 = s2.executeQuery("SELECT " +
+                                    "FirstName, " +
+                                    "LastName " +
+                                    "FROM PatientData WHERE patientID=" + fromID + ";");
+                            rs2.next();
+                            fromName = rs2.getString(1) + " " + rs2.getString(2);
+                            //Employee sender
+                        } else {
+                            rs2 = s2.executeQuery("SELECT " +
+                                    "FirstName, " +
+                                    "LastName, " +
+                                    "employeeType " +
+                                    "FROM employee WHERE userID=" + fromID + ";");
+                            rs2.next();
+                            fromName = (rs2.getInt(3) == 0) ? ("Dr. " + rs2.getString(1) + " " + rs2.getString(2)) : (rs2.getString(1) + " " + rs2.getString(2));
+                        }
+
+                        //Patient recipient
+                        if (toID < 0) {
+                            rs2 = s2.executeQuery("SELECT " +
+                                    "FirstName, " +
+                                    "LastName " +
+                                    "FROM PatientData WHERE patientID=" + toID + ";");
+                            rs2.next();
+                            toName = rs2.getString(1) + " " + rs2.getString(2);
+                            //Employee recipient
+                        } else {
+                            rs2 = s2.executeQuery("SELECT " +
+                                    "FirstName, " +
+                                    "LastName, " +
+                                    "employeeType " +
+                                    "FROM employee WHERE userID=" + toID + ";");
+                            rs2.next();
+                            toName = (rs2.getInt(3) == 0) ? ("Dr. " + rs2.getString(1) + " " + rs2.getString(2)) : (rs2.getString(1) + " " + rs2.getString(2));
+                        }
+                        Message newMsg = new Message(fromName, toName, rs.getString("message"));
+                        MessagesList.getItems().add(newMsg);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
+
+            } else {
+                System.out.println("Patient Message List selected item: None");
+            }
+            //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
+        });
+
+        //Set the TextArea based on the selected item in the list
+        MessagesList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (observable.getValue() != null) {
+                System.out.println("Message List selected item: " + observable.getValue().toString());
+                ReadMessageField.setText(observable.getValue().getMessage());
+            } else {
+                System.out.println("Message List selected item: None");
+                ReadMessageField.setText("");
+            }
             //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
         });
 
@@ -271,7 +373,68 @@ public class NursePortalController {
 
     @FXML
     public void onAddRecordClick(ActionEvent event) {
+        if (nurse.getPassword().equals(verifyAddRecordField.getText())) {
+            if (AddRecordList.getSelectionModel().getSelectedItem() == null) {
+                AddRecordStatusLabel.setTextFill(Color.RED);
+                AddRecordStatusLabel.setText("You must select a patient");
+            } else if (HeightField.getText().equals("") ||
+                    WeightField.getText().equals("") ||
+                    HeartRateField.getText().equals("") ||
+                    BloodField.getText().equals("") ||
+                    TemperatureField.getText().equals("") ||
+                    BreathField.getText().equals("")) {
+                AddRecordStatusLabel.setTextFill(Color.RED);
+                AddRecordStatusLabel.setText("All vitals need to be collected");
+            } else {
+                String recordData = "Height: " + HeightField.getText() + " cm\n" +
+                        "Weight: " + WeightField.getText() + " kg\n" +
+                        "Heart Rate: " + HeartRateField.getText() + " beats per minute\n" +
+                        "Blood Pressure: " + BloodField.getText() + " mmHg (sys/dia)\n" +
+                        "Temperature: " + TemperatureField.getText() + " °C\n" +
+                        "Respiration Rate: " + BreathField.getText() + " breaths per minute\n";
+                if (!ObservationField.getText().equals("")) {
+                    recordData += "\nAdditional Observations:\n" + ObservationField.getText();
+                }
+                DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                LocalDateTime now = LocalDateTime.now();
+                Record newRec = new Record(
+                        AddRecordList.getSelectionModel().getSelectedItem().toString(),
+                        nurse.toString(),
+                        false,
+                        format.format(now),
+                        recordData
+                );
+                //Add the record to the first tab if that is the currently selected patient.
+                if (PatientList.getSelectionModel().getSelectedItem() != null &&
+                        PatientList.getSelectionModel().getSelectedItem().equals(
+                        AddRecordList.getSelectionModel().getSelectedItem())) {
+                    PatientRecordList.getItems().add(newRec);
+                }
+                try {
+                    Connection connection = con.getdbconnection();
+                    Statement s = connection.createStatement();
+                    s.executeUpdate("INSERT INTO PatientRecords VALUES (" +
+                            userID + ", " +
+                            AddRecordList.getSelectionModel().getSelectedItem().getUserID() + ", '" +
+                            newRec.getDate() + "', '" +
+                            recordData + "');"
+                    );
 
+                    AddRecordStatusLabel.setTextFill(Color.LIMEGREEN);
+                    AddRecordStatusLabel.setText("Record added.");
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    AddRecordStatusLabel.setTextFill(Color.RED);
+                    AddRecordStatusLabel.setText("Unable to add entry to database");
+                }
+            }
+        } else {
+            AddRecordStatusLabel.setTextFill(Color.RED);
+            AddRecordStatusLabel.setText("Incorrect Password");
+        }
+
+        verifyAddRecordField.setText("");
     }
 
     @FXML
@@ -412,7 +575,42 @@ public class NursePortalController {
 
     @FXML
     protected void onSendToPatientClick(ActionEvent event) {
+        if (PatientMessageList.getSelectionModel().getSelectedItem() == null) {
+            MessageStatusLabel.setText("Please select a patient from the list.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        } else if (!SentMessageField.getText().equals("")) {
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
 
+                //Create message using Doctor's name for storing in the list.
+                Message newMsg = new Message(
+                        nurse.toString(),
+                        PatientMessageList.getSelectionModel().getSelectedItem().toString(),
+                        SentMessageField.getText()
+                );
+                MessagesList.getItems().add(newMsg);
+
+                s.executeUpdate("INSERT INTO Messages VALUES("
+                        + userID + ", "
+                        + PatientMessageList.getSelectionModel().getSelectedItem().getUserID() + ", '"
+                        + SentMessageField.getText() + "');"
+                );
+
+                MessageStatusLabel.setText("Message Sent to Patient.");
+                MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+
+                SentMessageField.setText("");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                MessageStatusLabel.setText("Error connecting to database");
+                MessageStatusLabel.setTextFill(Color.RED);
+            }
+        } else {
+            MessageStatusLabel.setText("You need to enter a message to send.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        }
     }
 
     @FXML
