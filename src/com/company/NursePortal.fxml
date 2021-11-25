@@ -178,7 +178,12 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Label fx:id="ChangeDoctorStatusLabel" alignment="CENTER" prefHeight="17.0" prefWidth="409.0" />
+                        <HBox alignment="CENTER" prefHeight="46.0" prefWidth="580.0" spacing="25.0">
+                           <children>
+                              <Label fx:id="ChangeDoctorStatusLabel" alignment="CENTER" prefHeight="38.0" prefWidth="409.0" wrapText="true" />
+                              <Label fx:id="UnsavedDoctorStatusLabel" prefHeight="61.0" prefWidth="159.0" wrapText="true" />
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER" prefHeight="38.0" prefWidth="551.0" spacing="100.0">
                            <children>
                               <PasswordField fx:id="verifyDoctorChangeField" prefHeight="25.0" prefWidth="350.0" promptText="Enter your password to verify changes" />

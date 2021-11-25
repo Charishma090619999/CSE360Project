@@ -79,6 +79,8 @@ public class NursePortalController {
     @FXML
     private Label ChangeDoctorStatusLabel;
     @FXML
+    private Label UnsavedDoctorStatusLabel;
+    @FXML
     private PasswordField verifyDoctorChangeField;
 
     //The Edit Account (change username/pass) Tab objects:
@@ -199,6 +201,42 @@ public class NursePortalController {
                 PatientList.getItems().add(newPat);
                 AddRecordList.getItems().add(newPat);
                 PatientMessageList.getItems().add(newPat);
+
+            }
+
+            //Now we populate the doctor lists for swapping doctors.
+            //First list is the list of the nurse's doctors.
+            ResultSet ourDoctors = s1.executeQuery("SELECT " +
+                    "FirstName, " +
+                    "LastName, " +
+                    "userID " +
+                    "FROM employee where employeeType=0 AND nurseID=" + userID + ";"
+            );
+
+            while (ourDoctors.next()) {
+                Doctor newDoc = new Doctor(
+                        ourDoctors.getString("FirstName"),
+                        ourDoctors.getString("LastName"),
+                        ourDoctors.getInt("userID")
+                );
+                YourDoctorList.getItems().add(newDoc);
+            }
+
+            //Second list is the list of the doctors without nurses.
+            ResultSet availableDoctors = s1.executeQuery("SELECT " +
+                    "FirstName, " +
+                    "LastName, " +
+                    "userID " +
+                    "FROM employee where employeeType=0 AND nurseID=0;"
+            );
+
+            while (availableDoctors.next()) {
+                Doctor newDoc = new Doctor(
+                        availableDoctors.getString("FirstName"),
+                        availableDoctors.getString("LastName"),
+                        availableDoctors.getInt("userID")
+                );
+                AvailableDoctorList.getItems().add(newDoc);
             }
 
         } catch (SQLException e) {
@@ -350,7 +388,6 @@ public class NursePortalController {
                 }
 
 
-
             } else {
                 System.out.println("Patient Message List selected item: None");
             }
@@ -407,7 +444,7 @@ public class NursePortalController {
                 //Add the record to the first tab if that is the currently selected patient.
                 if (PatientList.getSelectionModel().getSelectedItem() != null &&
                         PatientList.getSelectionModel().getSelectedItem().equals(
-                        AddRecordList.getSelectionModel().getSelectedItem())) {
+                                AddRecordList.getSelectionModel().getSelectedItem())) {
                     PatientRecordList.getItems().add(newRec);
                 }
                 try {
@@ -439,16 +476,69 @@ public class NursePortalController {
 
     @FXML
     protected void onAddDoctorClick(ActionEvent event) {
-
+        if (AvailableDoctorList.getSelectionModel().getSelectedItem() != null) {
+            Doctor temp = AvailableDoctorList.getSelectionModel().getSelectedItem();
+            YourDoctorList.getItems().add(temp);
+            AvailableDoctorList.getItems().remove(temp);
+            UnsavedDoctorStatusLabel.setTextFill(Color.RED);
+            UnsavedDoctorStatusLabel.setText("You have unsaved changes ");
+        } else {
+            ChangeDoctorStatusLabel.setTextFill(Color.RED);
+            ChangeDoctorStatusLabel.setText("You need to select a doctor from the left to be added");
+        }
     }
 
     @FXML
     protected void onRemoveDoctorClick(ActionEvent event) {
-
+        if (YourDoctorList.getSelectionModel().getSelectedItem() != null) {
+            Doctor temp = YourDoctorList.getSelectionModel().getSelectedItem();
+            AvailableDoctorList.getItems().add(temp);
+            YourDoctorList.getItems().remove(temp);
+            UnsavedDoctorStatusLabel.setTextFill(Color.RED);
+            UnsavedDoctorStatusLabel.setText("You have unsaved changes ");
+        } else {
+            ChangeDoctorStatusLabel.setTextFill(Color.RED);
+            ChangeDoctorStatusLabel.setText("You need to select a doctor from the right to be removed");
+        }
     }
 
     @FXML
     protected void onChangeDoctorClick(ActionEvent event) {
+        try {
+            Connection connection = con.getdbconnection();
+            Statement s = connection.createStatement();
+
+            if (verifyDoctorChangeField.getText().equals(nurse.getPassword())) {
+                //Make all the docs in the available list actually available
+                for (Doctor doc : AvailableDoctorList.getItems()) {
+                    s.executeUpdate(
+                            "UPDATE employee SET nurseID=0 " +
+                                    "WHERE employeeType=0 AND userID=" + doc.getUserID() + ";"
+                    );
+                }
+                //Make all the docs in the nurse's list have the right value
+                for (Doctor doc : YourDoctorList.getItems()) {
+                    s.executeUpdate(
+                            "UPDATE employee SET nurseID=" + userID +
+                                    " WHERE employeeType=0 AND userID=" + doc.getUserID() + ";"
+                    );
+                }
+
+                UnsavedDoctorStatusLabel.setTextFill(Color.LIMEGREEN);
+                UnsavedDoctorStatusLabel.setText("Changes Saved");
+                ChangeDoctorStatusLabel.setText("");
+
+            } else {
+                ChangeDoctorStatusLabel.setTextFill(Color.RED);
+                ChangeDoctorStatusLabel.setText("Incorrect Password");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            ChangeDoctorStatusLabel.setTextFill(Color.RED);
+            ChangeDoctorStatusLabel.setText("ERROR: Unable to connect to database");
+        }
+
+        verifyDoctorChangeField.setText("");
 
     }
 
