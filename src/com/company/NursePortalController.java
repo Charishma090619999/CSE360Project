@@ -45,8 +45,6 @@ public class NursePortalController {
     @FXML
     private Label DoctorLabel;
     @FXML
-    private Label NurseLabel;
-    @FXML
     private TextArea PatientRecordTextArea; //Shows the selected record's text.
 
     //The Add Record tab
@@ -146,8 +144,6 @@ public class NursePortalController {
                     nurseInfo.getString("Password")
             );
 
-            System.out.println(userID);
-
             //Get Patient Info where the doctorID equals the doctors who have the nurse's id for nurseID.
             ResultSet patientResults = s1.executeQuery("SELECT " +
                     "FirstName, " +
@@ -165,7 +161,7 @@ public class NursePortalController {
 
             //While there is a patient belonging to a doctor of this nurse
             while (patientResults.next()) {
-                System.out.println(patientResults.getString("FirstName"));
+                //System.out.println("Adding patient: " + patientResults.getString("FirstName"));
                 Statement s2 = connection.createStatement();
                 //Get the doctor's name for the current patient from the result. There has to be a doctor since
                 //that is how we found the patient.
@@ -173,14 +169,17 @@ public class NursePortalController {
                         "FirstName, " +
                         "LastName, " +
                         "userID " +
-                        "FROM employee WHERE EmployeeType=0 AND userID=" + patientResults.getInt("DoctorID") + ";"
+                        "FROM employee WHERE EmployeeType=0 " +
+                        "AND userID=" + patientResults.getInt("DoctorID") + ";"
                 );
+                //Doctor object used for toString.
                 doctorInfo.next();
                 Doctor tempDoc = new Doctor(
                         doctorInfo.getString("FirstName"),
                         doctorInfo.getString("LastName"),
                         doctorInfo.getInt("userID")
                 );
+                //Patient object stored in the Lists.
                 Patient newPat = new Patient(
                         patientResults.getString("FirstName"),
                         patientResults.getString("LastName"),
@@ -201,6 +200,72 @@ public class NursePortalController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //Populate the patient selection list for records  based on the selected patient.
+        PatientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (observable.getValue() != null) {
+                System.out.println("Patient List selected item: " + observable.getValue().toString());
+                try {
+                    Connection connection = con.getdbconnection();
+                    Statement s = connection.createStatement();
+
+                    //Get all the records for this patient.
+                    ResultSet rs = s.executeQuery("SELECT " +
+                            "userID, " +
+                            "currentDate, " +
+                            "recordData " +
+                            "FROM PatientRecords WHERE patientID=" + observable.getValue().getUserID() + ";"
+                    );
+                    PatientRecordList.getItems().clear();
+
+                    //For each record, find the employee and use them to construct a record.
+                    while (rs.next()) {
+                        int empID = rs.getInt("userID");
+                        //Use the userID from the message to find the employee
+                        Statement s2 = connection.createStatement();
+                        ResultSet rs2 = s2.executeQuery("SELECT " +
+                                "FirstName, " +
+                                "LastName, " +
+                                "employeeType " +
+                                "FROM employee WHERE userID='" + empID + "';");
+                        rs2.next();
+                        boolean isDoctor = rs2.getInt("employeeType") == 0;
+                        //We do not allow nurses to see records added by doctors
+                        if (!isDoctor) {
+                            Record newRec = new Record(
+                                    observable.getValue().toString(),
+                                    rs2.getString("FirstName") + " " + rs2.getString("LastName"),
+                                    false,
+                                    rs.getString("currentDate"),
+                                    rs.getString("recordData")
+                            );
+                            PatientRecordList.getItems().add(newRec);
+                        }
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                PatientNameLabel.setText(observable.getValue().toString());
+                PatientDOBLabel.setText(observable.getValue().getDOB());
+                PatientPharmacyLabel.setText(observable.getValue().getPharmacy());
+                PatientPhoneLabel.setText(observable.getValue().getPhone());
+                PatientAddressLabel.setText(observable.getValue().getAddress());
+                PatientInsuranceLabel.setText(observable.getValue().getInsurance());
+                DoctorLabel.setText(observable.getValue().getDoctor());
+
+            } else {
+                System.out.println("Patient List selected item: None");
+            }
+            //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
+        });
+
+        PatientRecordList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Record List selected item: " + observable.getValue());
+            PatientRecordTextArea.setText(observable.getValue().getRecordText());
+            //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
+        });
 
     }
 

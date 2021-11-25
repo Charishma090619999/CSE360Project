@@ -217,12 +217,12 @@ public class PatientPortalController {
             PatientInsuranceLabel.setText(rs1.getString("Insurance"));
 
             //Now we populate the records on the first pane
-            //Get all the records
+            //Get all the records for the patient
             ResultSet rs3 = s.executeQuery("SELECT " +
                     "userID, " +
                     "currentDate, " +
                     "recordData " +
-                    "FROM PatientRecords WHERE userID='" + userID + "';");
+                    "FROM PatientRecords WHERE patientID='" + userID + "';");
 
             //For each record, find the employee and use them to construct a record.
             while (rs3.next()) {
@@ -236,6 +236,7 @@ public class PatientPortalController {
                         "FROM employee WHERE userID='" + empID + "';");
                 rs4.next();
                 boolean isDoctor = rs4.getInt("employeeType") == 0;
+                //Patients can see all of their records.
                 Record newRec = new Record(patient.toString(),
                         rs4.getString("FirstName") + " " + rs4.getString("LastName"),
                         isDoctor,
@@ -330,7 +331,7 @@ public class PatientPortalController {
             //System.out.println("Old value: " + oldValue + "\nNew Value: " + newValue);
         });
 
-
+        //For any lists that can have things deleted, use an if statement to prevent an exception
         ChangeDoctorList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (observable.getValue() != null) {
                 System.out.println("Doctor List selected item: " + observable.getValue().toString());
@@ -469,7 +470,7 @@ public class PatientPortalController {
                     UpdateAccountStatusLabel.setText("That username is already in use!");
                 }
 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
