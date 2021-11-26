@@ -420,11 +420,11 @@ public class PatientPortalController {
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("All fields must be completed");
         } else if (!OldUsernameField.getText().equals(patient.getUsername())) {
-            System.out.println("Entered Username: " + patient.getUsername());
+            System.out.println("Entered Username: " + OldUsernameField.getText());
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Incorrect Username");
         } else if (!OldPasswordField.getText().equals(patient.getPassword())) {
-            System.out.println("Entered Password: " + patient.getPassword());
+            System.out.println("Entered Password: " + OldPasswordField.getText());
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Incorrect Password");
             //This check will be replaced by checking if the new username equals any current username

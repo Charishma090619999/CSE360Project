@@ -126,11 +126,10 @@ public class CreateAccountController {
                     CreateAccountStatusLabel.setText("Username must be unique");
                 } else {
                     try {
-                        int ID;
-                        ResultSet rs2 = s.executeQuery("SELECT COUNT(*) from PatientData");
+                        ResultSet rs2 = s.executeQuery("SELECT COUNT(*) from PatientData;");
                         //Get the ID
                         if (rs2.next()) {
-                            userID = -(rs2.getInt(1) + 1);
+                            userID = -rs2.getInt(1) - 1;
                             //Case for there being no patients
                         } else {
                             userID = -1;
