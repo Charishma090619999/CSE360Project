@@ -551,11 +551,11 @@ public class NursePortalController {
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("All fields must be completed");
         } else if (!OldUsernameField.getText().equals(nurse.getUsername())) {
-            System.out.println("Entered Username: " + nurse.getUsername());
+            System.out.println("Entered Username: " + OldUsernameField.getText());
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Incorrect Username");
         } else if (!OldPasswordField.getText().equals(nurse.getPassword())) {
-            System.out.println("Entered Password: " + nurse.getPassword());
+            System.out.println("Entered Password: " + OldPasswordField.getText());
             UpdateAccountStatusLabel.setTextFill(Color.RED);
             UpdateAccountStatusLabel.setText("Incorrect Password");
             //This check will be replaced by checking if the new username equals any current username
@@ -629,22 +629,6 @@ public class NursePortalController {
         }
     }
 
-    @FXML
-    protected void onNewUsernameFieldType(Event event) {
-        //We would replace this condition to be a check for if the username is used
-        //by any other patient account and not by the current patient account.
-        if (NewUsernameField.getText().equals("")) {
-            NewUsernameStatusLabel.setTextFill(Color.RED);
-            NewUsernameStatusLabel.setText("Must supply a username");
-        } else if (NewUsernameField.getText().equals(nurse.getUsername())) {
-            NewUsernameStatusLabel.setTextFill(Color.RED);
-            NewUsernameStatusLabel.setText("Username already in use");
-        } else {
-            NewUsernameStatusLabel.setTextFill(Color.LIMEGREEN);
-            NewUsernameStatusLabel.setText("Username is unique");
-        }
-        //This runs for every character typed. Hopefully that isn't too inefficient. It is good for a live update
-    }
 
     @FXML
     protected void onNewPasswordFieldType(Event event) {
@@ -673,7 +657,6 @@ public class NursePortalController {
                 Connection connection = con.getdbconnection();
                 Statement s = connection.createStatement();
 
-                //Create message using Doctor's name for storing in the list.
                 Message newMsg = new Message(
                         nurse.toString(),
                         PatientMessageList.getSelectionModel().getSelectedItem().toString(),

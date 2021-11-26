@@ -116,6 +116,9 @@ public class Patient {
         this.lastName = lastName;
     }
 
+    public void setDoctor(String doctor) { this.doctor = doctor; }
+
+    public void setNurse(String nurse) { this.nurse = nurse; }
 
     public String getAddress() {return Address;}
     public String getDOB() {return DOB;}
