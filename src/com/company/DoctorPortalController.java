@@ -70,6 +70,24 @@ public class DoctorPortalController {
     @FXML
     private PasswordField verifyAddRecordField;
 
+    //The Add Employee tab
+    @FXML
+    private TextField AddFirstNameField;
+    @FXML
+    private TextField AddLastNameField;
+    @FXML
+    private TextField AddUsernameField;
+    @FXML
+    private TextField AddPasswordField;
+    @FXML
+    private Label AddEmployeeStatusLabel;
+    @FXML
+    private Label AddUsernameStatusLabel;
+    @FXML
+    private Label AddPasswordStatusLabel;
+    @FXML
+    private PasswordField verifyAddEmployeeField;
+
     //The Edit Account (change username/pass) Tab objects:
     @FXML
     private Label UpdateAccountStatusLabel;
@@ -406,7 +424,7 @@ public class DoctorPortalController {
                         RefillField.getText().equals("")) {
                     PrescriptionStatusLabel.setTextFill(Color.ORANGE);
                     PrescriptionStatusLabel.setText("Prescription not added");
-                //If there is a prescription to add
+                    //If there is a prescription to add
                 } else {
                     somethingToAdd = true;
                     recordData += "Prescription: " + PrescriptionField.getText() + "\n" +
@@ -483,12 +501,137 @@ public class DoctorPortalController {
 
     @FXML
     protected void onAddDoctorClick(ActionEvent event) {
+        if (!verifyAddEmployeeField.getText().equals(doctor.getPassword())) {
+            AddEmployeeStatusLabel.setTextFill(Color.RED);
+            AddEmployeeStatusLabel.setText("Incorrect Password");
+        } else if (AddFirstNameField.getText().equals("") ||
+                AddLastNameField.getText().equals("") ||
+                AddUsernameField.getText().equals("") ||
+                AddPasswordField.getText().equals("")) {
+            AddEmployeeStatusLabel.setTextFill(Color.RED);
+            AddEmployeeStatusLabel.setText("All fields are required");
+        } else {
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
 
+                ResultSet rs = s.executeQuery("SELECT userID FROM employee " +
+                        "WHERE Username='" + AddUsernameField.getText() + "';"
+                );
+
+                if (!rs.next()) {
+                    int ID;
+                    ResultSet rs2 = s.executeQuery("SELECT COUNT(*) from employee;");
+                    //If there are employees in the database
+                    if (rs2.next()) {
+                        ID = rs2.getInt(1) + 1;
+                    } else {
+                        ID = 1;
+                    }
+
+                    s.executeUpdate("INSERT INTO employee VALUES(" +
+                            ID + ", '" +
+                            AddFirstNameField.getText() + "', '" +
+                            AddLastNameField.getText() + "', 0, 0, '" +
+                            AddUsernameField.getText() + "', '" +
+                            AddPasswordField.getText() + "');"
+                    );
+
+                    AddEmployeeStatusLabel.setText("Doctor " + AddLastNameField.getText() +  " Added");
+                    AddEmployeeStatusLabel.setTextFill(Color.LIMEGREEN);
+
+                } else {
+                    AddEmployeeStatusLabel.setTextFill(Color.RED);
+                    AddEmployeeStatusLabel.setText("Username must be unique");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        verifyAddEmployeeField.setText("");
     }
 
     @FXML
     protected void onAddNurseClick(ActionEvent event) {
+        if (!verifyAddEmployeeField.getText().equals(doctor.getPassword())) {
+            AddEmployeeStatusLabel.setTextFill(Color.RED);
+            AddEmployeeStatusLabel.setText("Incorrect Password");
+        } else if (AddFirstNameField.getText().equals("") ||
+                AddLastNameField.getText().equals("") ||
+                AddUsernameField.getText().equals("") ||
+                AddPasswordField.getText().equals("")) {
+            AddEmployeeStatusLabel.setTextFill(Color.RED);
+            AddEmployeeStatusLabel.setText("All fields are required");
+        } else {
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
 
+                ResultSet rs = s.executeQuery("SELECT userID FROM employee " +
+                        "WHERE Username='" + AddUsernameField.getText() + "';"
+                );
+
+                if (!rs.next()) {
+                    int ID;
+                    ResultSet rs2 = s.executeQuery("SELECT COUNT(*) from employee;");
+                    //If there are employees in the database
+                    if (rs2.next()) {
+                        ID = rs2.getInt(1) + 1;
+                    } else {
+                        ID = 1;
+                    }
+
+                    s.executeUpdate("INSERT INTO employee VALUES(" +
+                            ID + ", '" +
+                            AddFirstNameField.getText() + "', '" +
+                            AddLastNameField.getText() + "', 1, 0, '" +
+                            AddUsernameField.getText() + "', '" +
+                            AddPasswordField.getText() + "');"
+                    );
+
+                    AddEmployeeStatusLabel.setText("Nurse " + AddLastNameField.getText() +  " Added");
+                    AddEmployeeStatusLabel.setTextFill(Color.LIMEGREEN);
+
+                } else {
+                    AddEmployeeStatusLabel.setTextFill(Color.RED);
+                    AddEmployeeStatusLabel.setText("Username must be unique");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        verifyAddEmployeeField.setText("");
+    }
+
+    @FXML
+    protected void onAddUsernameType(Event event) {
+        if (AddUsernameField.getText().equals("")) {
+            AddUsernameStatusLabel.setTextFill(Color.RED);
+            AddUsernameStatusLabel.setText("Must supply a valid username");
+        } else {
+            AddUsernameStatusLabel.setText("");
+        }
+    }
+
+    @FXML
+    protected void onAddPasswordType(Event event) {
+        if (AddPasswordField.getText().equals("")) {
+            AddPasswordStatusLabel.setTextFill(Color.RED);
+            AddPasswordStatusLabel.setText("Must supply a valid password");
+        } else if (AddPasswordField.getText().length() < 8) {
+            AddPasswordStatusLabel.setTextFill(Color.RED);
+            AddPasswordStatusLabel.setText("Password too short. Must be 8 characters or more");
+        } else if (AddPasswordField.getText().length() < 12) {
+            AddPasswordStatusLabel.setTextFill(Color.ORANGE);
+            AddPasswordStatusLabel.setText("Password is valid, but a longer one is suggested");
+        } else {
+            AddPasswordStatusLabel.setTextFill(Color.LIMEGREEN);
+            AddPasswordStatusLabel.setText("Strong, valid Password");
+        }
     }
 
     @FXML
@@ -597,7 +740,41 @@ public class DoctorPortalController {
 
     @FXML
     protected void onSendToPatientClick(ActionEvent event) {
+        if (PatientMessageList.getSelectionModel().getSelectedItem() == null) {
+            MessageStatusLabel.setText("Please select a patient from the list.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        } else if (!SentMessageField.getText().equals("")) {
+            try {
+                Connection connection = con.getdbconnection();
+                Statement s = connection.createStatement();
 
+                Message newMsg = new Message(
+                        doctor.toString(),
+                        PatientMessageList.getSelectionModel().getSelectedItem().toString(),
+                        SentMessageField.getText()
+                );
+                MessagesList.getItems().add(newMsg);
+
+                s.executeUpdate("INSERT INTO Messages VALUES("
+                        + userID + ", "
+                        + PatientMessageList.getSelectionModel().getSelectedItem().getUserID() + ", '"
+                        + SentMessageField.getText() + "');"
+                );
+
+                MessageStatusLabel.setText("Message Sent to Patient.");
+                MessageStatusLabel.setTextFill(Color.LIMEGREEN);
+
+                SentMessageField.setText("");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                MessageStatusLabel.setText("Error connecting to database");
+                MessageStatusLabel.setTextFill(Color.RED);
+            }
+        } else {
+            MessageStatusLabel.setText("You need to enter a message to send.");
+            MessageStatusLabel.setTextFill(Color.RED);
+        }
     }
 
     @FXML

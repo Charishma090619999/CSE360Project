@@ -161,7 +161,7 @@ public class NursePortalController {
                     "Address, " +
                     "Insurance, " +
                     "DoctorID " +
-                    "FROM PatientData WHERE DoctorID=(" +
+                    "FROM PatientData WHERE DoctorID IN (" +
                     "SELECT userID FROM employee WHERE nurseID=" + userID + ");"
             );
 
